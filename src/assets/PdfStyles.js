@@ -1,0 +1,165 @@
+import { StyleSheet } from "@react-pdf/renderer";
+export const styles = StyleSheet.create({
+  page: {
+    flexDirection: "column",
+    backgroundColor: "#ffffff",
+  },
+  ContenedorDatos: {
+    flexDirection: "row",
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
+  },
+  header: {
+    flexDirection: "row",
+    //  justifyContent:"space-between",
+    color: "#901010",
+    fontSize: 14,
+    marginLeft: "15mm",
+    marginRight: "10mm",
+    marginTop: "10mm",
+    borderBottom: "1 solid grey",
+  },
+  signatureArea: {
+    flexDirection: "row",
+    paddingTop: 50,
+    fontSize: 11,
+    justifyContent: "space-between",
+  },
+  firma: {
+    paddingLeft: 60,
+    paddingRight: 60,
+    borderTop: "1 solid black",
+  },
+  logo: {
+    width: 64,
+    height: 30,
+    marginTop: "5mm",
+    position: "absolute",
+
+    right: "10mm",
+  },
+  datos: {
+    //display: "flex",
+    flexDirection: "row",
+    //  justifyContent:"space-between",
+    marginLeft: "15mm",
+    marginRight: "10mm",
+    width: "50%",
+  },
+  labeldatos: {
+    fontSize: 11,
+    fontWeight: "bold",
+    textAlign: "left",
+    marginTop: 5,
+    width: "20mm",
+  },
+  textdatos: {
+    fontSize: 11,
+    textAlign: "left",
+    marginTop: 5,
+    width: "60mm",
+  },
+  fechaviewer: {
+    width: "80mm",
+    marginRight: "10mm",
+    marginTop: 20,
+    fontSize: 11,
+    alignContent: "center",
+    fontWeight: "bold",
+  },
+  labelPago: {
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  table: {
+    display: "table",
+    marginLeft: "15mm",
+    marginRight: "10mm",
+    marginTop: 10,
+    border: "solid 1px grey",
+  },
+  tableRow: {
+    margin: "auto",
+    flexDirection: "row",
+  },
+  PaymentRow: {
+    flexDirection: "row",
+  },
+  tableCol: {
+    width: "25%",
+    border: "1 solid grey",
+  },
+  PaymentCol: {
+    width: "75%",
+    border: "1 solid grey",
+  },
+  cashCol: {
+    width: "20%",
+    borderLeft: "1 solid grey",
+    //borderRight:"1 solid grey",
+    borderBottom: "1 solid grey",
+    fontSize: 11,
+    textAlign: "center",
+  },
+  methodCol: {
+    width: "55%",
+
+    fontSize: 11,
+    textAlign: "center",
+    borderRight: "1 solid grey",
+  },
+  bankCol: {
+    width: "33.3%",
+    borderBottom: "1 solid grey",
+    borderLeft: "1 solid grey",
+    fontSize: 11,
+    textAlign: "center",
+  },
+  ColDetalles: {
+    width: "75%",
+    border: "1 solid grey",
+  },
+  tableCell: {
+    margin: "auto",
+    fontSize: 11,
+    width: "100%",
+    backgroundColor: "#000025",
+    color: "#ffffff",
+    textAlign: "center",
+  },
+  valueCell: {
+    margin: "auto",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  CellDetalles: {
+    width: "100%",
+    margin: "auto",
+    marginTop: 5,
+    fontSize: 11,
+
+    textAlign: "justify",
+    padding: 10,
+  },
+  cashCell: {
+    width: "100%",
+    margin: "auto",
+    marginTop: 5,
+    fontSize: 10,
+    border: "1 solid grey",
+    textAlign: "center",
+    padding: 10,
+  },
+  observaciones: {
+    border: "1 solid grey",
+    marginLeft: "15mm",
+    marginRight: "10mm",
+    padding: 10,
+    textAlign: "justify",
+  },
+});

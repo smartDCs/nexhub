@@ -1,0 +1,15 @@
+.projectCard{
+   
+    display: flex;
+    justify-content: space-between;
+}
+.projectCard h2{
+   font-size: 16pt;
+   font-weight: bold;
+   color: rgb(218, 70, 17);
+}
+.projectCard h1{
+    font-size: 12pt;
+    font-weight: bold;
+   
+ }
