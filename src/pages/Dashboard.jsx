@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import React from "react";
 import "dayjs/locale/es-mx";
@@ -10,53 +10,51 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { AiFillNotification } from "react-icons/ai";
 import { FaSackDollar } from "react-icons/fa6";
 import { FaToolbox } from "react-icons/fa";
-
+import Groups3Icon from '@mui/icons-material/Groups3';
+import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 function Dashboard() {
   return (
     <div>
     
-      <div className="grid grid-cols-4 gap-4 m-9">
+      <div className="grid grid-cols-3 gap-4 m-9">
         <Card variant="elevation">
           <CardContent className="dashboardCard">
-            <h1>
-              Saldo en la cuenta &nbsp;
+            <h1 className="justify-between">
+              CUENTAS 
               <FaSackDollar className="icono text-yellow-400" />
             </h1>
 
             <ul>
-              <li>Banco 1: $1234</li>
+              <li>Por cobrar: $1234</li>
+              <li>Por pagar: $18292</li>
             </ul>
           </CardContent>
         </Card>
         <Card variant="elevation">
           <CardContent className="dashboardCard">
-            <h1>Mantenimientos
-&nbsp;
+            <h1 className="justify-between">PROYECTOS
 <FaToolbox className="icono text-red-800"/>
 
             </h1>
             <ul>
-              <li>Programados: 2</li>
-              <li>Realizados: 20</li>
+              <li>Diseño: 2</li>
+              <li>Construcción: 20</li>
             </ul>
           </CardContent>
         </Card>
         <Card variant="elevation">
           <CardContent className="dashboardCard">
-            <h1>Inventario</h1>
-          </CardContent>
-        </Card>
-        <Card variant="elevation">
-          <CardContent className="dashboardCard">
-            <h1>
-              Comunicados &nbsp;
-              <AiFillNotification className="text-blue-500 icono" />
+            <h1 className="justify-between">COTIZACIONES
+
+              <RequestQuoteIcon className="icono text-green-700"/>
             </h1>
             <ul>
-              <li>No leidos: 23</li>
+              <li>Vigentes: 22</li>
             </ul>
+            
           </CardContent>
         </Card>
+      
       </div>
 
       <div className="grid grid-cols-2 gap-4 m-9">

@@ -1,17 +1,18 @@
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
-import Invoices from "../pages/Invoices";
+
 import Payments from "../pages/Payments";
 import Login from "../pages/Login";
 import Neighbors from "../pages/Neighbors";
 import BuildSettings from "../pages/BuildSettings";
 import Report from "../pages/Report";
 import Projects from "../pages/Projects";
+import Cotizaciones from "../pages/Cotizaciones";
 const Rutes = () => {
   return (
     <Routes>
     <Route path="/" element={<Dashboard />} />
-    <Route path="/invoices" element={<Invoices />} />
+    <Route path="/cotizaciones" element={<Cotizaciones />} />
     <Route path="/payments" element={<Payments />} />
     <Route path="/projects" element={<Projects/>} />
     <Route path="/neighbors" element={<Neighbors/>} />

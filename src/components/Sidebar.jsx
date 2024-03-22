@@ -12,57 +12,61 @@ import InventoryIcon from "@mui/icons-material/Inventory";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import Diversity2Icon from "@mui/icons-material/Diversity2";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { Groups3Outlined } from "@mui/icons-material";
 function Sidebar() {
   return (
     <div className="sidebar flex-none w-64 h-screen bg-teal-950">
-      <div className="p-2">
-        <ul className="text-white">
+      <div className="p-2 ">
+        <ul className="text-white ">
           <li className="p-4 hover:bg-lime-400 rounded-md ">
+         
             <NavLink to="/">
-              <DashboardIcon className="icono" />
+              <DashboardIcon  className="mr-4"/>
               DASHBOARD
             </NavLink>
+           
           </li>
-          <li className="p-4 hover:bg-lime-400 rounded-md">
+          <li className="p-4 hover:bg-lime-400 rounded-md ">
             <NavLink to="/payments">
-              <RequestQuoteIcon className="icono" />
+              <RequestQuoteIcon className="mr-4"/>
               COBROS/PAGOS
             </NavLink>
           </li>
-          <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to="/invoices">
-              <ReceiptIcon className="icono" />
-              INVOICES
+          <li className="p-4 hover:bg-lime-400 rounded-md " >
+            <NavLink to="/cotizaciones">
+              <ReceiptIcon className="mr-4"/>
+              COTIZACIONES
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to="/projects">
-              <HomeWorkIcon className="icono" />
-              PROYECTOS
+            <NavLink to="/projects" >
+              <HomeWorkIcon className="mr-4" />
+               PROYECTOS
+             
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">
             <NavLink to="/inventario">
-              <InventoryIcon className="icono" />
-              INVENTARIO
+              <Groups3Outlined className="mr-4"/>
+              NÓMINA
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">
             <NavLink to="/mantenimiento">
-              <EngineeringIcon className="icono" />
+              <EngineeringIcon  className="mr-4"/>
               MANTENIMIENTO
             </NavLink>
           </li>
 
           <li className="p-4 hover:bg-lime-400 rounded-md">
             <NavLink to="/neighbors">
-              <Diversity2Icon className="icono" />
+              <Diversity2Icon  className="mr-4"/>
               VECINOS
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">
             <NavLink to="/settings">
-              <SettingsIcon className="icono" />
+              <SettingsIcon  className="mr-4"/>
               CONFIGURAR EDIFICIO
             </NavLink>
           </li>

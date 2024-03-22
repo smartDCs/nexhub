@@ -236,3 +236,7 @@ flex-direction: row;
 .checkBoxLabel{
   font-size: 10pt;
 }
+.QuoteDetail{
+  border-bottom: 1px solid rgb(240, 231, 231);
+ 
+}
