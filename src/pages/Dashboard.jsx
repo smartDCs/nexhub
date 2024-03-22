@@ -81,7 +81,9 @@ function Dashboard() {
         <Card variant="elevation" >
           <CardContent className="bg-yellow-100">
             <h1>Agenda</h1>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}
+            adapterLocale="es"
+            >
               <DateCalendar value={dayjs()} />
             </LocalizationProvider>
           </CardContent>

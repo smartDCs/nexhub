@@ -5,7 +5,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import FormControl from "@mui/material/FormControl";
@@ -13,6 +13,7 @@ import MUIDataTable from "mui-datatables";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import FormLabel from "@mui/material/FormLabel";
+import Fab from "@mui/material/Fab";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { DatePicker } from "@mui/x-date-pickers";
 import Modal from "@mui/material/Modal";
@@ -23,6 +24,7 @@ import FoundationIcon from "@mui/icons-material/Foundation";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { BsCashCoin } from "react-icons/bs";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
+import { Save, Print } from "@mui/icons-material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
@@ -31,21 +33,36 @@ import "dayjs/locale/es";
 import "../assets/Projects.css";
 /** import material icons */
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
-import { Save } from "@mui/icons-material";
+
 import { FaEraser } from "react-icons/fa";
 import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 
-
-
 function Projects() {
- 
   const [etapa, setEtapa] = useState("");
   const [proyecto, setProyecto] = useState("");
   const [descripcion, setDescription] = useState("");
   const [promotor, setPromotor] = useState("");
   const [address, setAddress] = useState("");
   const [monto, setMonto] = useState(0);
-  const [open,setOpen]=useState(false);
+  const [open, setOpen] = useState(false);
+  const [abonos, setAbonos] = useState(1);
+  const [porcentaje, setPorcentaje] = useState(0);
+  const [myArray, setMyArray] = useState([]);
+  const [fechaInicio, setFechaInicio] = useState(new Date());
+  const [fechaFin, setFechaFin] = useState(new Date());
+  const [numDias, setNumDias] = useState();
+
+  // Inicializa el estado con un array de tamaño n
+
+  const [responsive, setResponsive] = useState("simple");
+  // const [tableBodyHeight, setTableBodyHeight] = useState("400px");
+  const [tableBodyMaxHeight, setTableBodyMaxHeight] = useState("100%");
+  const [searchBtn, setSearchBtn] = useState(true);
+  const [downloadBtn, setDownloadBtn] = useState(true);
+  const [printBtn, setPrintBtn] = useState(true);
+  const [viewColumnBtn, setViewColumnBtn] = useState(true);
+  const [filterBtn, setFilterBtn] = useState(true);
+
   /**project variables */
   let openProjects = 34;
   let totalDesigns = 12;
@@ -76,88 +93,165 @@ function Projects() {
     setPromotor("");
     setProyecto("");
     setAddress("");
-    setMonto("");
+    setMonto(0);
     setDescription("");
   }
   function saveProject() {
     alert(proyecto + promotor + address + descripcion + monto + etapa);
   }
 
-const handleClose=()=>{
-  setOpen(false)
-}
-const handleOpen=()=>{
-  setOpen(true);
-}
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+  
+    GenerateData(abonos,monto);
+                       
+    setOpen(true);
+  };
 
-/**Información de la tabla modal */
-const columnsPagos = [
-  {
-    name: "payment",
-    label: " ",
-    options: {
-      filter: true,
-      sort: true,
+  /**Información de la tabla modal */
+  const columnsPagos = [
+    {
+      name: "cuota",
+      label: "Cuota",
+    },
+    {
+      name: "date",
+      label: "Fecha",
+    },
+    {
+      name: "porcentaje",
+      label: "%",
+      options: {
+        filter: false,
+        sort: false,
 
-      customBodyRender: (value, tableMeta, updateValue) => {
-        const handleChange = (event) => {
-          const id = tableMeta.rowData[1];
-        //  handleOpen(id, "Pagos", tableMeta.rowData[3]);
-        };
+        customBodyRender: (value, tableMeta, updateValue) => {
+          const handleChange = (event) => {
+            const id = tableMeta.rowData[1];
+            //  handleOpen(id, "Pagos", tableMeta.rowData[3]);
+          };
 
-        return (
-          <button onClick={handleChange} className="btnPay">
-            {" "}
-            Pagar &nbsp;
-            <BsCashCoin className=" size-10 pt-0 pl-2 pb-4" />
-          </button>
-        );
+          return (
+            <TextField
+              variant="standard"
+              type="number"
+              value={porcentaje}
+              InputProps={{
+                inputProps: {
+                  min: 0,
+                  max: 100,
+                },
+              }}
+              className="w-12"
+              onChange={() => {
+                setPorcentaje(event.target.value);
+              }}
+            />
+          );
+        },
       },
     },
-  },
-  {
-    name: "cuota",
-    label: "Cuota",
-  },
-  {
-    name: "date",
-    label: "Fecha",
-  },
-  {
-    name: "monto",
-    label: "Monto",
-  },
-];
-const data = [
-  {
-    cuota: "1",
-    date: "2024/02/03",
-    monto: "34.5",
-  },
-  {
-    cuota: "2",
-    date: "2024/02/03",
-    monto: "1235",
-  },
-  { cuota: "3", date: "2024/02/03", monto: "1234.5" },
-  {
-    cuota: "4",
-    date: "2024/02/03",
-    monto: "870",
-  },
-  { cuota: "5", date: "2024/02/03", monto: "1234.5" },
-  {
-    cuota: "6",
-    date: "2024/02/03",
-    monto: "1234.5",
-  },
-  { cuota: "7", date: "2024/02/03", monto: "1234.5" },
-  {
-    cuota: "8",
-    date: "2024/02/03",
-    monto: "1234.5",
-  },
-];
+    {
+      name: "monto",
+      label: "Monto",
+    },
+  ];
+
+  /**Genera la tabla con el numero de abonos */
+  function GenerateData(index,monto) {
+
+    let resta = dayjs(fechaFin).diff(dayjs(fechaInicio), "days");
+    if (resta > 0) {
+      setNumDias(resta);
+    }
+  
+    setPorcentaje(100 / index);
+
+
+
+    let newData = [];
+
+    let suma = 0;
+    if (index > 1) {
+      suma = Math.floor(numDias / (index - 1));
+      
+    } else {
+      suma = 0;
+     
+    }
+    for (let i = 1; i <= index; i++) {
+     
+      newData.push({
+       
+        cuota: i,
+        date: dayjs(fechaInicio)
+          .add(suma * (i - 1), "days")
+          .format("YYYY-MM-DD"),
+          monto: monto/index,
+      });
+    }
+
+    return newData;
+  }
+
+  useEffect(() => {
+    
+    setMyArray(GenerateData(abonos,monto));
+  }, [abonos,monto]);
+
+  
+
+  useEffect(() => {
+  
+    GenerateData(abonos,monto);
+  }, [fechaInicio, fechaFin, abonos, monto]);
+
+  const options = {
+    search: searchBtn,
+    download: downloadBtn,
+    print: printBtn,
+    viewColumns: viewColumnBtn,
+    filter: filterBtn,
+    filterType: "dropdown",
+    responsive,
+    selectableRows: "none",
+    textLabels: {
+      body: {
+        noMatch: "No se encontraron coincidencias",
+        toolTip: "Ordenar",
+        columnHeaderTooltip: (column) => `Ordenar por ${column.label}`,
+      },
+      pagination: {
+        next: "Siguiente",
+        previous: "Atras",
+        rowsPerPage: "Filas:",
+        displayRows: "de",
+      },
+      toolbar: {
+        search: "Buscar",
+        downloadCsv: "Descargar CSV",
+        print: "Imprimir",
+        viewColumns: "Ver Columnas",
+        filterTable: "Filtrar tabla",
+      },
+      filter: {
+        all: "Todo",
+        title: "Filtros",
+        reset: "Limpiar filtros",
+      },
+      viewColumns: {
+        title: "Mostrar columnas",
+        titleAria: "Mostrar/Ocultar columnas",
+      },
+      selectedRows: {
+        text: "Fila(s) seleccionadas",
+        delete: "Delete",
+        deleteAria: "Delete Selected Rows",
+      },
+    },
+  };
   return (
     <>
       <div className="grid grid-cols-2 gap-4 ml-9 mr-9 mb-0 mt-5">
@@ -266,6 +360,7 @@ const data = [
                 label="Monto del proyecto ($)"
                 variant="standard"
                 type="number"
+                id="txtMonto"
                 InputProps={{ inputProps: { min: 0 } }}
                 value={monto}
                 onChange={() => {
@@ -317,14 +412,29 @@ const data = [
                       dateAdapter={AdapterDayjs}
                       adapterLocale="es"
                     >
-                      <DatePicker label="Fecha de inicio" />
+                      <DatePicker
+                        label="Fecha de inicio"
+                        value={dayjs(fechaInicio)}
+                        onChange={(date) => {
+                          setFechaInicio(dayjs(date).format("YYYY-MM-DD"));
+                          setFechaFin(
+                            dayjs().add(1, "month").format("YYYY-MM-DD")
+                          );
+                        }}
+                      />
                     </LocalizationProvider>
 
                     <LocalizationProvider
                       dateAdapter={AdapterDayjs}
                       adapterLocale="es"
                     >
-                      <DatePicker label="Fecha de finalización" />
+                      <DatePicker
+                        label="Fecha de finalización"
+                        value={dayjs(fechaFin)}
+                        onChange={(date1) => {
+                          setFechaFin(dayjs(date1).format("YYYY-MM-DD"));
+                        }}
+                      />
                     </LocalizationProvider>
                   </div>
                   <div className="grid row-span-1 border">
@@ -334,22 +444,23 @@ const data = [
                         label="# de abonos"
                         variant="standard"
                         type="number"
-                        InputProps={{ inputProps: { min: 0 } }}
-                        value={monto}
+                        id="txtAbonos"
+                        InputProps={{ inputProps: { min: 1, max: 10 } }}
+                        value={abonos}
                         onChange={() => {
-                          setMonto(event.target.value);
+                          setAbonos(event.target.value);
+                          setPorcentaje(100 / event.target.value);
                         }}
                       />
-                      <button className="col-span-2 text-green-600 flex gap-4 m-2" onClick={()=>{
-                        handleOpen();
-                      }}>
-                      Ver tabla <LiaFileInvoiceDollarSolid />
+                      <button
+                        className="col-span-2 text-green-600 flex gap-4 m-2"
+                        onClick={() => {
+                          //  setMyArray(GenerateData(abonos));
+                          handleOpen();
+                        }}
+                      >
+                        Ver tabla <LiaFileInvoiceDollarSolid />
                       </button>
-               
-                
-                 
-               
-                  
                     </div>
                   </div>
                 </div>
@@ -376,29 +487,24 @@ const data = [
         </Card>
       </div>
 
-{/**
- * Ventana modal que muestra la tabla de pagos geerada
- */}
+      {/**
+       * Ventana modal que muestra la tabla de pagos geerada
+       */}
 
-<Modal
-open={open}
-onClose={handleClose}
-
->
-<div className="modalProyectos">
-<MUIDataTable
-data={data}
-columns={columnsPagos}
-
-/>
-</div>
-
-
-
-</Modal>
-
-
-
+      <Modal open={open} onClose={handleClose}>
+        <div className="modalProyectos  ">
+          <div className="modalP overflow-auto">
+            <MUIDataTable
+              data={myArray}
+              columns={columnsPagos}
+              options={options}
+            />
+          </div>
+          <Fab color="primary" aria-label="add">
+            <Save />
+          </Fab>
+        </div>
+      </Modal>
     </>
   );
 }
