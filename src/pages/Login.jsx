@@ -14,7 +14,7 @@ function Login() {
         </form>
 
         <p>
-          If you don't have an account, please <a href="/"> Register</a>
+          Welcome to Nexhub LIVING, if you don't have an account, please <a href="/"> Register</a>
         </p>
       </div>
     </div>

@@ -8,11 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import { MdEditDocument } from "react-icons/md";
-import { IoMdAddCircleOutline } from "react-icons/io";
 import { FaPrint } from "react-icons/fa";
 import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
 import { IoIosSave } from "react-icons/io";
-import { Upcoming } from "@mui/icons-material";
 import MUIDataTable from "mui-datatables";
 import dayjs from "dayjs";
 function Cotizaciones() {
@@ -20,53 +18,49 @@ function Cotizaciones() {
 
   /** constantes para la tabla */
   const [responsive, setResponsive] = useState("simple");
-const [tableBodyHeight, setTableBodyHeight] = useState("600px");
+  const [tableBodyHeight, setTableBodyHeight] = useState("600px");
   const [tableBodyMaxHeight, setTableBodyMaxHeight] = useState("100%");
-  const [searchBtn, setSearchBtn] = useState(true);
+  const [searchBtn, setSearchBtn] = useState(false);
   const [downloadBtn, setDownloadBtn] = useState(true);
-  const [printBtn, setPrintBtn] = useState(true);
-  const [viewColumnBtn, setViewColumnBtn] = useState(true);
-  const [filterBtn, setFilterBtn] = useState(true);
+  const [printBtn, setPrintBtn] = useState(false);
+  const [viewColumnBtn, setViewColumnBtn] = useState(false);
+  const [filterBtn, setFilterBtn] = useState(false);
 
   /**
    * Variables para la tabla
    */
   const [cantidad, setCantidad] = useState(1);
-/**
- * Variables datos informativos
- */
-const comboOptions=['8','15','30'];
-const [comboValue,setComboValue]=useState(comboOptions[0]);
-const [inputValue,setInputValue]=useState('');
+  /**
+   * Variables datos informativos
+   */
+  const comboOptions = ["8", "15", "30"];
+  const [comboValue, setComboValue] = useState(comboOptions[0]);
+  const [inputValue, setInputValue] = useState("");
 
-const optionsPago=['Efectivo','Transferencia','Crédito'];
-const [comboPago,setComboPago]=useState(optionsPago[0]);
-const [inputPago,setInputPago]=useState('');
-
-
-
-
+  const optionsPago = ["Efectivo", "Transferencia", "Crédito"];
+  const [comboPago, setComboPago] = useState(optionsPago[0]);
+  const [inputPago, setInputPago] = useState("");
 
   const columns = [
     {
       name: "item",
-      label: "Item",
+      label: "ITEN",
     },
     {
       name: "code",
-      label: "Código",
+      label: "CODIGO",
     },
     {
       name: "description",
-      label: "Descripción",
+      label: "DESCRIPCCION",
     },
     {
       name: "unity",
-      label: "Unidad",
+      label: "UNIDAD",
     },
     {
       name: "quantity",
-      label: "Cantidad",
+      label: "CANTIDAD",
       options: {
         filter: false,
         sort: false,
@@ -104,19 +98,117 @@ const [inputPago,setInputPago]=useState('');
   ];
 
   const data = [
-    { item: 0, code: "INSELEC",description:"Mano de obra por instalación de acometida 3x8+10 AWG" ,unity:"m",cantidad: 3, price1: 5, price2: 8 },
-    { item: 1, code: "INSELEC",description:"Punto de tomacorriente 110V" ,unity:"u", cantidad: 3, price1: 523, price2: 1569 },
-    { item: 2, code: "INSELEC", description:"Punto de iluminación" , unity:"u",cantidad: 3, price1: 5, price2: 8 },
-    { item: 3, code: "INSELEC", description:"Punto de red CAT-6" ,unity:"u",cantidad: 3, price1: 5, price2: 8 },
-    { item: 4, code: "INSELEC", description:"Mano de obra por instalación de acometida 3x10+10 AWG" ,unity:"m",cantidad: 3, price1: 5, price2: 8 },
-    { item: 5, code: "INSELEC", description:"Mano de obra por instalación de varilla de puesta a tierra con GEM conductivo" ,unity:"u",cantidad: 3, price1: 5, price2: 8 },
-    { item: 6, code: "INSELEC", description:"Punto de tomacorriente 220V" ,unity:"u",cantidad: 3, price1: 5, price2: 8 },
-    { item: 7, code: "INSELEC",description:"Mano de obra por instalación acometida 3x6+10 AWG" , unity:"m",cantidad: 3, price1: 5, price2: 8 },
-    { item: 8, code: "INSELEC",description:"Armado de tablero eléctrico de 1 a 12 circuitos" , unity:"u",cantidad: 3, price1: 5, price2: 8 },
-    { item: 9, code: "INSELEC",description:"Armado de tablero eléctrico de 13 a 24 circuitos" , unity:"u", cantidad: 3, price1: 5, price2: 8 },
-    { item: 10, code: "INSELEC" ,description:"Instalación y configuración de videoportero analógico" , unity:"u", cantidad: 3, price1: 5, price2: 8 },
-    { item: 11, code: "INSELEC" ,description:"Instalación y configuración de videoportero IP" , unity:"u", cantidad: 3, price1: 5, price2: 8 },
+    {
+      item: 1,
+      code: "INSELEC",
+      description: "Mano de obra por instalación de acometida 3x8+10 AWG",
+      unity: "m",
+      cantidad: 3,
+      price1: 5,
+      price2: 8,
+    },
+    {
+      item: 2,
+      code: "INSELEC",
+      description: "Punto de tomacorriente 110V",
+      unity: "u",
+      cantidad: 3,
+      price1: 523,
+      price2: 1569,
+    },
+    {
+      item: 3,
+      code: "INSELEC",
+      description: "Punto de iluminación",
+      unity: "u",
+      cantidad: 3,
+      price1: 5,
+      price2: 8,
+    },
+    {
+      item: 4,
+      code: "INSELEC",
+      description: "Punto de red CAT-6",
+      unity: "u",
+      cantidad: 3,
+      price1: 5,
+      price2: 8,
+    },
+    {
+      item: 5,
+      code: "INSELEC",
+      description: "Mano de obra por instalación de acometida 3x10+10 AWG",
+      unity: "m",
+      cantidad: 3,
+      price1: 5,
+      price2: 8,
+    },
+    {
+      item: 6,
+      code: "INSELEC",
+      description:
+        "Mano de obra por instalación de varilla de puesta a tierra con GEM conductivo",
+      unity: "u",
+      cantidad: 3,
+      price1: 5,
+      price2: 8,
+    },
+    {
+      item: 7,
+      code: "INSELEC",
+      description: "Punto de tomacorriente 220V",
+      unity: "u",
+      cantidad: 3,
+      price1: 5,
+      price2: 8,
+    },
+    {
+      item: 8,
+      code: "INSELEC",
+      description: "Mano de obra por instalación acometida 3x6+10 AWG",
+      unity: "m",
+      cantidad: 3,
+      price1: 5,
+      price2: 8,
+    },
+    {
+      item: 9,
+      code: "INSELEC",
+      description: "Armado de tablero eléctrico de 1 a 12 circuitos",
+      unity: "u",
+      cantidad: 3,
+      price1: 5,
+      price2: 8,
+    },
+    {
+      item: 10,
+      code: "INSELEC",
+      description: "Armado de tablero eléctrico de 13 a 24 circuitos",
+      unity: "u",
+      cantidad: 3,
+      price1: 5,
+      price2: 8,
+    },
+    {
+      item: 11,
+      code: "INSELEC",
+      description: "Instalación y configuración de videoportero analógico",
+      unity: "u",
+      cantidad: 3,
+      price1: 5,
+      price2: 8,
+    },
+    {
+      item: 12,
+      code: "INSELEC",
+      description: "Instalación y configuración de videoportero IP",
+      unity: "u",
+      cantidad: 3,
+      price1: 5,
+      price2: 8,
+    },
   ];
+ 
   const options = {
     search: searchBtn,
     download: downloadBtn,
@@ -125,12 +217,12 @@ const [inputPago,setInputPago]=useState('');
     filter: filterBtn,
     filterType: "dropdown",
     responsive,
-    tableBodyHeight,
-    tableBodyMaxHeight,
-    selectableRows: "none",
+    //tableBodyHeight,
+    //tableBodyMaxHeight,
+    selectableRows: "multiple",
     textLabels: {
       body: {
-        noMatch: "No se encontraron coincidencias",
+        noMatch: "No se agrego ningún elemento",
         toolTip: "Ordenar",
         columnHeaderTooltip: (column) => `Ordenar por ${column.label}`,
       },
@@ -162,7 +254,9 @@ const [inputPago,setInputPago]=useState('');
         deleteAria: "Delete Selected Rows",
       },
     },
+  
   };
+  const hoy = dayjs().format("YYYY/MM/DD");
   return (
     <div className="grid grid-cols-1 m-9 ">
       <Card variant="elevation">
@@ -172,10 +266,9 @@ const [inputPago,setInputPago]=useState('');
               <MdEditDocument className="mr-4" />
             </Typography>
             <div className="grid grid-rows-2 text-end">
-            <Typography>COTIZACIÓN #: {cotizacion}</Typography>
-            <Typography>{dayjs().format("YYYY/MM/DD")}</Typography>
+              <Typography>COTIZACIÓN #: {cotizacion}</Typography>
+              <Typography>{hoy}</Typography>
             </div>
-         
           </div>
           <div className="grid grid-cols-4 gap-4">
             <TextField
@@ -193,13 +286,12 @@ const [inputPago,setInputPago]=useState('');
               label="Teléfono"
               className="col-span-1"
             />
-           
-            </div>
-            <div className="grid grid-cols-8 gap-4">
+          </div>
+          <div className="grid grid-cols-8 gap-4">
             <TextField
               variant="standard"
               label="Dirección:"
-             className="col-span-3"
+              className="col-span-3"
             />
             <TextField
               variant="standard"
@@ -208,75 +300,48 @@ const [inputPago,setInputPago]=useState('');
             />
             <div className="col-span-2">
               <div className="grid grid-rows-2">
-              <Autocomplete
-            value={comboPago}
-            onChange={(
-              event,
-              newValue)=>{
-                setComboPago(newValue); 
-              }
-            }
-            inputValue={inputPago}
-            onInputChange={(event,newInputValue)=>{
-              setInputPago(newInputValue);
-            }
-            }
-            options={optionsPago}
-            size="small"
-            sx={{
-              width: "full",
-              marginTop: "10px",
-              
-             
-            }}
-         
-            renderInput={(params)=>(
-              <TextField {...params} 
-              label="Forma de pago"
-              
-              />
-                            
-            )
-          }
-         
-           
-            />
-               <Autocomplete
-            value={comboValue}
-            onChange={(
-              event,
-              newValue)=>{
-                setComboValue(newValue); 
-              }
-            }
-            inputValue={inputValue}
-            onInputChange={(event,newInputValue)=>{
-              setInputValue(newInputValue);
-            }
-            }
-            options={comboOptions}
-            size="small"
-            sx={{
-              width: "full",
-              marginTop: "10px",
-            
-            }}
-           
-            renderInput={(params)=>(
-              <TextField {...params} 
-              label="Días válidos de la oferta"
-              
-              />
-            )}
-           
-            >
-              Días
-              </Autocomplete>
+                <Autocomplete
+                  value={comboPago}
+                  onChange={(event, newValue) => {
+                    setComboPago(newValue);
+                  }}
+                  inputValue={inputPago}
+                  onInputChange={(event, newInputValue) => {
+                    setInputPago(newInputValue);
+                  }}
+                  options={optionsPago}
+                  size="small"
+                  sx={{
+                    width: "full",
+                    marginTop: "10px",
+                  }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Forma de pago" />
+                  )}
+                />
+                <Autocomplete
+                  value={comboValue}
+                  onChange={(event, newValue) => {
+                    setComboValue(newValue);
+                  }}
+                  inputValue={inputValue}
+                  onInputChange={(event, newInputValue) => {
+                    setInputValue(newInputValue);
+                  }}
+                  options={comboOptions}
+                  size="small"
+                  sx={{
+                    width: "full",
+                    marginTop: "10px",
+                  }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Días válidos de la oferta" />
+                  )}
+                >
+                  Días
+                </Autocomplete>
               </div>
-
             </div>
-          
-         
           </div>
           <div className=" QuoteDetail">
             <h1>DETALLE</h1>
@@ -314,8 +379,11 @@ const [inputPago,setInputPago]=useState('');
             </div>
           </div>
           <div>
-            <MUIDataTable data={data} columns={columns} 
-            options={options}
+            <MUIDataTable
+    title={"COTIZACIÓN #: "+cotizacion}
+              data={data}
+              columns={columns}
+              options={options}
             />
           </div>
           <div
