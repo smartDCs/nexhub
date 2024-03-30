@@ -71,6 +71,7 @@ margin-left: 250px;
 }
 .workArea{
   background-color: rgba(214, 207, 207, 0.644);
+  overflow: auto;
 bottom: 0;
 top: 0;
   margin-left: 256px;

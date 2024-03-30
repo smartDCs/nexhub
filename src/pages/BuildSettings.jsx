@@ -81,7 +81,7 @@ function BuildSettings() {
                       className=" col-span-1 TextField"
                     />
                   </div>
-                  <div>
+                  <div >
                     <Autocomplete
                       value={value}
                       onChange={(event, newValue) => {

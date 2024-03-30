@@ -17,14 +17,13 @@ import Fab from "@mui/material/Fab";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { DatePicker } from "@mui/x-date-pickers";
 import Modal from "@mui/material/Modal";
-//import AdapterDateFns from '@mui/x-date-pickers/AdapterDateFns';
+
 /**Import material icons */
 import DesignServicesIcon from "@mui/icons-material/DesignServices";
 import FoundationIcon from "@mui/icons-material/Foundation";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
-import { BsCashCoin } from "react-icons/bs";
-import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
-import { Save, Print } from "@mui/icons-material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { Save} from "@mui/icons-material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
@@ -35,7 +34,7 @@ import "../assets/Projects.css";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 
 import { FaEraser } from "react-icons/fa";
-import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
+
 
 function Projects() {
   const [etapa, setEtapa] = useState("");
