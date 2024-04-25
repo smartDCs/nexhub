@@ -8,6 +8,7 @@ import BuildSettings from "../pages/BuildSettings";
 import Report from "../pages/Report";
 import Projects from "../pages/Projects";
 import Cotizaciones from "../pages/Cotizaciones";
+import ReportCotizacion from '../pages/ReportCotizacion';
 const Rutes = () => {
   return (
     <Routes>
@@ -19,6 +20,7 @@ const Rutes = () => {
     <Route path="/login" element={<Login/>} />
     <Route path="/settings" element={<BuildSettings/>} />
     <Route path="/report_payment" element={<Report/>}/>
+    <Route path="/report_quote" element={<ReportCotizacion/>}/>
   </Routes>
   )
 }

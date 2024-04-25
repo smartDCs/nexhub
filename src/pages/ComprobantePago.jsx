@@ -2,7 +2,7 @@ import React from "react";
 import { Document, Page, Text, View, Image } from "@react-pdf/renderer";
 import dayjs from "dayjs";
 import { styles } from "../assets/PdfStyles";
-import nexhub from "../assets/Icons/nexhub.png";
+
 import logo1 from "../assets/Icons/logo1.png";
 function ComprobantePago() {
   let numero = 32;

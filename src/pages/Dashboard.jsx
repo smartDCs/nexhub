@@ -10,17 +10,16 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { AiFillNotification } from "react-icons/ai";
 import { FaSackDollar } from "react-icons/fa6";
 import { FaToolbox } from "react-icons/fa";
-import Groups3Icon from '@mui/icons-material/Groups3';
-import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
+import Groups3Icon from "@mui/icons-material/Groups3";
+import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 function Dashboard() {
   return (
     <div>
-    
       <div className="grid grid-cols-3 gap-4 m-9">
         <Card variant="elevation">
           <CardContent className="dashboardCard">
             <h1 className="justify-between">
-              CUENTAS 
+              CUENTAS
               <FaSackDollar className="icono text-yellow-400" />
             </h1>
 
@@ -32,9 +31,9 @@ function Dashboard() {
         </Card>
         <Card variant="elevation">
           <CardContent className="dashboardCard">
-            <h1 className="justify-between">PROYECTOS
-<FaToolbox className="icono text-red-800"/>
-
+            <h1 className="justify-between">
+              PROYECTOS
+              <FaToolbox className="icono text-red-800" />
             </h1>
             <ul>
               <li>Diseño: 2</li>
@@ -44,17 +43,15 @@ function Dashboard() {
         </Card>
         <Card variant="elevation">
           <CardContent className="dashboardCard">
-            <h1 className="justify-between">COTIZACIONES
-
-              <RequestQuoteIcon className="icono text-green-700"/>
+            <h1 className="justify-between">
+              COTIZACIONES
+              <RequestQuoteIcon className="icono text-green-700" />
             </h1>
             <ul>
               <li>Vigentes: 22</li>
             </ul>
-            
           </CardContent>
         </Card>
-      
       </div>
 
       <div className="grid grid-cols-2 gap-4 m-9">
@@ -62,8 +59,11 @@ function Dashboard() {
           <CardContent>
             <div>
               <h1>Convocar una reunión</h1>
-              <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es-mx">
-                <DemoContainer components={["DateTimePicker"]} >
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="es-mx"
+              >
+                <DemoContainer components={["DateTimePicker"]}>
                   <DateTimePicker label="Día y hora de la reunión" />
                 </DemoContainer>
               </LocalizationProvider>
@@ -76,12 +76,10 @@ function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card variant="elevation" >
+        <Card variant="elevation">
           <CardContent className="bg-yellow-100">
             <h1>Agenda</h1>
-            <LocalizationProvider dateAdapter={AdapterDayjs}
-            adapterLocale="es"
-            >
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
               <DateCalendar value={dayjs()} />
             </LocalizationProvider>
           </CardContent>

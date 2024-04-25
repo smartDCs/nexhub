@@ -13,7 +13,10 @@ import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
 import { IoIosSave } from "react-icons/io";
 import MUIDataTable from "mui-datatables";
 import dayjs from "dayjs";
+import { Navigate, useNavigate } from "react-router-dom";
 function Cotizaciones() {
+
+  let navigate=useNavigate();
   const [cotizacion, setCotizacion] = useState(22);
 
   /** constantes para la tabla */
@@ -257,6 +260,16 @@ function Cotizaciones() {
   
   };
   const hoy = dayjs().format("YYYY/MM/DD");
+
+/**
+ * Función para generar el pdf de la cotizacion
+ *  */ 
+function PrintReport(event){
+  event.preventDefault();
+  //Guardar la cotización en la DB
+  navigate("/report_quote");
+}
+
   return (
     <div className="grid grid-cols-1 m-9 ">
       <Card variant="elevation">
@@ -372,6 +385,7 @@ function Cotizaciones() {
                 variant="contained"
                 color="inherit"
                 className="col-span-1 gap-1 h-8"
+                onClick={PrintReport}
               >
                 <FaPrint />
                 Imprimir

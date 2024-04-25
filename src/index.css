@@ -7,6 +7,12 @@ html body{
   margin:0;
   display: inline;
  overflow: hidden;
+ background-image: url('././assets/img.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+ opacity: 0.96;
+ 
+
 }
 .icono{
   font-size: 1.2rem; 
@@ -18,11 +24,12 @@ html body{
   width: 400px;
   height: 400px;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.884);
+  background-color: rgba(2, 2, 2, 0.4);
   border-radius: 10px;
   border: solid 1px;
   border-color: lightgray;
   font-weight: bold;
+ 
 }
 .login p{
  
@@ -70,7 +77,7 @@ margin-left: 250px;
   
 }
 .workArea{
-  background-color: rgba(214, 207, 207, 0.644);
+  
   overflow: auto;
 bottom: 0;
 top: 0;
@@ -79,7 +86,8 @@ top: 0;
   position: absolute;
  right: 0;
  left: 0;
-
+ 
+  background-color: rgba(255, 255, 255, 0.1);
 }
 .containerLogin{
   background-color: rgba(13, 250, 92, 0);
