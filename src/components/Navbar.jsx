@@ -10,9 +10,12 @@ import {
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { NavLink } from "react-router-dom";
-import React, { useState } from "react";
-
+import React, { useState, useContext } from "react";
+import { UserContext } from "../context/User/UserContext";
 function Navbar() {
+
+  const {currentUser}=useContext(UserContext);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -40,7 +43,7 @@ function Navbar() {
             </IconButton>
           </Tooltip>
         </a>
-        <a className="text-white font-extrabold pt-1 mr-4 ml-2 ">NexHub LIVING</a>
+        <a className="text-white font-extrabold pt-1 mr-4 ml-2 ">{currentUser}</a>
 
         <Menu
           anchorEl={anchorEl}

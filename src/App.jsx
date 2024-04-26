@@ -4,9 +4,10 @@ import "./index.css";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Rutes from "./routes/Rutes";
+import UserState from "./context/User/UserState";
 function App() {
   return (
-    <>
+    <UserState>
       <BrowserRouter>
         <div className="principal">
           <div>
@@ -22,7 +23,7 @@ function App() {
           </div>
         </div>
       </BrowserRouter>
-    </>
+    </UserState>
   );
 }
 

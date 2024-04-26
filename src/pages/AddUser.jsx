@@ -8,6 +8,8 @@ function AddUser() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [address,setAddress]=useState("");
+  const [phone,setPhone]=useState("");
   const navigate = useNavigate();
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
@@ -56,6 +58,7 @@ function AddUser() {
             onChange={() => {
               setName(event.target.value);
             }}
+            required
           />
           <div className="mt-4 gap-4 flex justify-between" >
           <input
@@ -64,7 +67,7 @@ function AddUser() {
             name="nombre"
             placeholder="Dirección"
             onChange={() => {
-              setName(event.target.value);
+              setAddress(event.target.value);
             }}
           />
           <input
@@ -73,7 +76,7 @@ function AddUser() {
             name="nombre"
             placeholder="Teléfono"
             onChange={() => {
-              setName(event.target.value);
+              setPhone(event.target.value);
             }}
           />
           </div>

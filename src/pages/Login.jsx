@@ -2,12 +2,17 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase_config";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/User/UserContext";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  //const [logedUser, setLogedUser] = useState("");
+
+  const {currentUser,userChange}=useContext(UserContext);
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -19,8 +24,9 @@ function Login() {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log("Acceso correcto, bienvenido: ");
-        console.log(user.email);
+        // console.log("Acceso correcto, bienvenido: ");
+        //console.log(user.email);
+        userChange(user.email);
         navigate("/dashboard");
       })
       .catch((error) => {
@@ -52,14 +58,13 @@ function Login() {
   };
 
   return (
-   
+    <>
       <div className="containerLogin ">
         <div className="login ">
           <form>
             <h1>Login</h1>
             <h2>Email</h2>
             <input
-              
               type="email"
               name="email"
               placeholder="ejemplo@correo.com"
@@ -69,7 +74,6 @@ function Login() {
             />
             <h2>Password</h2>
             <input
-             
               type="password"
               name="password"
               placeholder="Contraseña"
@@ -92,24 +96,21 @@ function Login() {
             >
               <p>
                 <NavLink to="/resetPassword">
-                  <label > Olvidé mi contraseña</label>
+                  <label> Olvidé mi contraseña</label>
                 </NavLink>
               </p>
             </div>
           </form>
-          
-            <p>
-              {
-                " Welcome to Nexhub LIVING, if you don't have an account, please "
-              }
-              <NavLink to="/registerUser">
+
+          <p>
+            {" Welcome to Nexhub LIVING, if you don't have an account, please "}
+            <NavLink to="/registerUser">
               <label>{" Register "}</label>
-              </NavLink>
-            </p>
-      
+            </NavLink>
+          </p>
         </div>
       </div>
-
+    </>
   );
 }
 
