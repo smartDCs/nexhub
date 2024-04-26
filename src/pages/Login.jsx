@@ -1,8 +1,7 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {  signInWithEmailAndPassword } from "firebase/auth";
 
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../firebase_config";
-import React, { useState, useContext } from "react";
+
+import { useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/User/UserContext";
 
@@ -10,12 +9,9 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  //const [logedUser, setLogedUser] = useState("");
+  
 
-  const {currentUser,userChange}=useContext(UserContext);
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+  const {auth,userChange}=useContext(UserContext);
 
   const handleSingIn = (event) => {
     event.preventDefault();
@@ -24,8 +20,7 @@ function Login() {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        // console.log("Acceso correcto, bienvenido: ");
-        //console.log(user.email);
+     
         userChange(user.email);
         navigate("/dashboard");
       })

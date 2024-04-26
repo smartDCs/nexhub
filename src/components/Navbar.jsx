@@ -9,13 +9,16 @@ import {
 } from "@mui/material";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import { NavLink } from "react-router-dom";
-import React, { useState, useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
 import { UserContext } from "../context/User/UserContext";
+import { signOut } from "firebase/auth";
+import { Navigate } from "react-router-dom/dist";
+
 function Navbar() {
+  const { auth, currentUser, userChange } = useContext(UserContext);
 
-  const {currentUser}=useContext(UserContext);
-
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -24,26 +27,43 @@ function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const closeSesion = () => {
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      userChange("");
+      navigate("/");
+    }).catch((error) => {
+      console.log("Error al cerrar sesión", error);
+    });
+    
+  };
   return (
     <div className=" navbar  h-12 ">
       <div className=" flex justify-end">
-    
         <a>
           <Tooltip title="Perfil">
             <IconButton
-            
               onClick={handleClick}
               size="small"
-              sx={{ ml: 2}}
+              sx={{ ml: 2 }}
               aria-controls={open ? "account-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 40, height: 40, color:"#00a4aa", background:"#fcfcfc" }} ></Avatar>
+              <Avatar
+                sx={{
+                  width: 40,
+                  height: 40,
+                  color: "#00a4aa",
+                  background: "#fcfcfc",
+                }}
+              ></Avatar>
             </IconButton>
           </Tooltip>
         </a>
-        <a className="text-white font-extrabold pt-1 mr-4 ml-2 ">{currentUser}</a>
+        <a className="text-white font-extrabold pt-1 mr-4 ml-2 ">
+          {currentUser?currentUser:"User"}
+        </a>
 
         <Menu
           anchorEl={anchorEl}
@@ -93,7 +113,7 @@ function Navbar() {
             </ListItemIcon>
             Configuración
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={closeSesion}>
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
