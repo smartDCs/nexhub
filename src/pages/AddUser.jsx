@@ -1,18 +1,14 @@
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-
-} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase_config";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function AddUser() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-
+  const navigate = useNavigate();
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -23,7 +19,8 @@ function AddUser() {
         // Signed in
         const user = userCredential.user;
         console.log(user.email);
-
+        alert('Usuario '+name+', creado con exito');
+        navigate("/");
         // ...
       })
       .catch((error) => {
@@ -44,7 +41,7 @@ function AddUser() {
         // ..
       });
   };
- 
+
   return (
     <div className="containerLogin ">
       <div className="login ">
@@ -70,10 +67,13 @@ function AddUser() {
               setEmail(event.target.value);
             }}
           />
-          <h2>Password
-          <h3 style={{fontSize:'8pt', fontStyle:'italic'}}>{"(Debe tener al menos 6 caracteres)"}</h3>
+          <h2>
+            Password
+            <h3 style={{ fontSize: "8pt", fontStyle: "italic" }}>
+              {"(Debe tener al menos 6 caracteres)"}
+            </h3>
           </h2>
-         
+
           <input
             style={{ borderRadius: "5px", padding: "5px" }}
             type="password"
@@ -84,12 +84,9 @@ function AddUser() {
             }}
           />
           <div className="buttonContainer">
-            <button >Registrar</button>
+            <button onClick={handleCreateAccount}>Registrar</button>
           </div>
-         
         </form>
-
-      
       </div>
     </div>
   );
