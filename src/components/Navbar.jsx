@@ -13,7 +13,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { UserContext } from "../context/User/UserContext";
 import { signOut } from "firebase/auth";
-import { Navigate } from "react-router-dom/dist";
+
 
 function Navbar() {
   const { auth, currentUser, userChange } = useContext(UserContext);
