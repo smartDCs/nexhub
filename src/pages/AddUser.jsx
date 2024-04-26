@@ -69,9 +69,9 @@ function AddUser() {
           />
           <h2>
             Password
-            <h3 style={{ fontSize: "8pt", fontStyle: "italic" }}>
-              {"(Debe tener al menos 6 caracteres)"}
-            </h3>
+            <a style={{ fontSize: "8pt", fontStyle: "italic" }}>
+              {" (Debe tener al menos 6 caracteres)"}
+            </a>
           </h2>
 
           <input
