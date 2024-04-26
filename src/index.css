@@ -49,7 +49,10 @@ body {
   border: solid 1px;
   border-color: beige;
   width: 100%;
-  font-size: large;
+  font-size: medium;
+  border-radius: 5px;
+  padding: 5px;
+
 }
 .buttonContainer {
   width: 100%;

@@ -57,6 +57,26 @@ function AddUser() {
               setName(event.target.value);
             }}
           />
+          <div className="mt-4 gap-4 flex justify-between" >
+          <input
+            style={{ borderRadius: "5px", padding: "5px" }}
+            type="text"
+            name="nombre"
+            placeholder="Dirección"
+            onChange={() => {
+              setName(event.target.value);
+            }}
+          />
+          <input
+            style={{ borderRadius: "5px", padding: "5px" }}
+            type="text"
+            name="nombre"
+            placeholder="Teléfono"
+            onChange={() => {
+              setName(event.target.value);
+            }}
+          />
+          </div>
           <h2>Email</h2>
           <input
             style={{ borderRadius: "5px", padding: "5px" }}

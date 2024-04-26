@@ -59,7 +59,7 @@ function Login() {
             <h1>Login</h1>
             <h2>Email</h2>
             <input
-              style={{ borderRadius: "5px", padding: "5px" }}
+              
               type="email"
               name="email"
               placeholder="ejemplo@correo.com"
@@ -69,7 +69,7 @@ function Login() {
             />
             <h2>Password</h2>
             <input
-              style={{ borderRadius: "5px", padding: "5px" }}
+             
               type="password"
               name="password"
               placeholder="Contraseña"
