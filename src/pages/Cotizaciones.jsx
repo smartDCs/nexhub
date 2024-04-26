@@ -20,6 +20,7 @@ function Cotizaciones() {
   const [cotizacion, setCotizacion] = useState(22);
 
   /** constantes para la tabla */
+  
   const [responsive, setResponsive] = useState("simple");
   const [tableBodyHeight, setTableBodyHeight] = useState("600px");
   const [tableBodyMaxHeight, setTableBodyMaxHeight] = useState("100%");

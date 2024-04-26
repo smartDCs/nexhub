@@ -2,250 +2,262 @@
 @tailwind components;
 @tailwind utilities;
 
-html body{
-  height:100%;
-  margin:0;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
   display: inline;
- overflow: hidden;
- background-image: url('././assets/img.jpg');
+  overflow: hidden;
+  background-image: url("././assets/img.jpg");
+  background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
- opacity: 0.96;
- 
-
 }
-.icono{
-  font-size: 1.2rem; 
+.icono {
+  font-size: 1.2rem;
   padding-right: 5px;
 }
 
-.login{
- 
+.login {
   width: 400px;
-  height: 400px;
+  height: auto;
   padding: 20px;
   background-color: rgba(2, 2, 2, 0.4);
   border-radius: 10px;
   border: solid 1px;
-  border-color: lightgray;
+  border-color: rgba(2, 2, 2, 0.4);
   font-weight: bold;
- 
 }
-.login p{
- 
-  padding: 20px;
+.login p {
+  padding: 10px 20px 20px 20px;
   font-size: small;
+  color: lightgray;
+  font-style: italic;
 }
-.login p a{
- 
-  color: blue;
+.login p a {
+  
+  color: darkcyan;
 }
-.login h1{
+.login h1 {
   font-size: 36pt;
+  color: white;
 }
-.login input{
+.login input {
   border: solid 1px;
   border-color: beige;
   width: 100%;
   font-size: large;
-  
 }
-.login button{
-  margin-top: 20px;
+.buttonContainer {
   width: 100%;
+  margin-top: 20px;
+
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+.login button {
+  width: 50%;
   padding: 10;
-  background-color: lightgreen;
-  border-radius: 20px;
+  background-color: limegreen;
+  border-radius: 10px;
   font-size: x-large;
 }
-.login h2{
+.login h2 {
   margin-top: 20px;
- 
+  color: white;
 }
-.sidebar{
+.sidebar {
   margin: 0;
   padding: 0;
   top: 0;
   bottom: 0;
   position: absolute;
-overflow-y: auto;
+  overflow-y: auto;
+  width: 250px;
+
+  background: rgb(4, 180, 180);
+  background: linear-gradient(
+    270deg,
+    rgba(4, 47, 46, 0.9752275910364145) 100%,
+    rgba(4, 180, 180, 0.9556197478991597) 0%
+  );
 }
-.navbar{
- 
-position: sticky;
-margin-left: 250px;
-  
+.containerLogo{
+  border-bottom: 2px solid;
+ /* border-color: rgb(0,30,20);*/
+ border-color:rgba(237, 255, 18, 0.596);
+  margin: 10px;
 }
-.workArea{
-  
+.navbar {
+  position: sticky;
+  margin-left: 250px;
+  background: rgb(4, 47, 46);
+  background: linear-gradient(
+    56deg,
+    rgba(4, 47, 46, 0.9220063025210083) 37%,
+    rgba(4, 180, 180, 1) 100%
+  );
+}
+.workArea {
   overflow: auto;
-bottom: 0;
-top: 0;
-  margin-left: 256px;
-  margin-top: 48px;
+  bottom: 0;
+  top: 0;
+  margin-left: 252px;
+  margin-top: 50px;
   position: absolute;
- right: 0;
- left: 0;
- 
-  background-color: rgba(255, 255, 255, 0.1);
+  right: 0;
+  left: 0;
+
+  background-color: rgba(198, 214, 53, 0.1);
 }
-.containerLogin{
+.containerLogin {
   background-color: rgba(13, 250, 92, 0);
-padding: 10% 25%;
+  padding: 10% 25%;
   height: 100%;
   width: 100%;
   top: 50%;
   align-content: center;
 }
-.dashboardCard h1{
-font-size: large;
-font-weight: bold;
-color: rgb(88, 87, 87);
-display: flex;
-flex-direction: row;
+.dashboardCard h1 {
+  font-size: large;
+  font-weight: bold;
+  color: rgb(88, 87, 87);
+  display: flex;
+  flex-direction: row;
 }
-.dashboardCard h1 ul li{
- 
+.dashboardCard h1 ul li {
   color: rgba(231, 229, 229, 0.952);
- 
-  }
-  .formMeeting textarea{
-    width: 100%;
-    margin-top: 20px;
-    border: solid 1px;
-    border-color: lightgray;
-    height: 100px;
-  }
-  .formMeeting button{
-   color: green;
-   font-weight: bolder;
-  }
-  .btnGuardar{
-    width: 100px;
+}
+.formMeeting textarea {
+  width: 100%;
+  margin-top: 20px;
+  border: solid 1px;
+  border-color: lightgray;
+  height: 100px;
+}
+.formMeeting button {
+  color: green;
+  font-weight: bolder;
+}
+.btnGuardar {
+  width: 100px;
+}
+.btnGuardar:hover {
+  background-color: #36c939; /* Green */
+}
 
-  }
-  .btnGuardar:hover{
-    background-color: #36c939; /* Green */
+.formNeighbor {
+  background-color: rgba(230, 255, 18, 0.596);
+  border: solid 1px;
+  border-radius: 5px;
+  border-color: beige;
+  padding: 10px;
+  font-weight: bold;
+}
 
-  }
- 
-  .formNeighbor{
-    background-color: rgba(247, 194, 18, 0.596);
-    border: solid 1px;
-    border-radius: 5px;
-    border-color: beige;
-    padding: 10px;
-    font-weight: bold;
-  }
-
-  .formAdministrativa h1{
-    font-size: small;
-    font-weight: bolder;
+.formAdministrativa h1 {
+  font-size: small;
+  font-weight: bolder;
   text-align: center;
-  }
-  .formAdministrativa {
-    
-   padding: 20px;
-    background-color: rgba(23, 186, 236, 0.493);
-    border-radius: 5px;
-    border-color: lightgrey;
-  }
-  .TextField{
-    background-color: rgb(247, 248, 248);
-    
-  }
-  .headerCardPayments{
-    display: flex;
-    justify-content: space-between;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  .headerCardPayments h2{
-    color: rgb(1, 1, 156);
-    font-weight: bold;
-    font-size: small;
-  }
-  .headerCardPayments span{
-    color: rgb(13, 136, 33);
-   
-  }
-  .mainCard{
-    height: 595px;
-  }
-  .btnPagar{
-    width: 80px;
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
-    background-color: #36c939;
-    color: white;
-    border-radius: 5px;
-    border-color: green;
-  }
- .btnPay{
+}
+.formAdministrativa {
+  padding: 20px;
+  background-color: rgba(23, 186, 236, 0.493);
+  border-radius: 5px;
+  border-color: lightgrey;
+}
+.TextField {
+  background-color: rgb(247, 248, 248);
+}
+.headerCardPayments {
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.headerCardPayments h2 {
+  color: rgb(1, 1, 156);
+  font-weight: bold;
+  font-size: small;
+}
+.headerCardPayments span {
+  color: rgb(13, 136, 33);
+}
+.mainCard {
+  height: 595px;
+}
+.btnPagar {
+  width: 80px;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  background-color: #36c939;
+  color: white;
+  border-radius: 5px;
+  border-color: green;
+}
+.btnPay {
   color: white;
   background-color: rgba(7, 173, 7, 0.753);
   border: solid 1px;
   border-radius: 5px;
   width: 80px;
-  height:  32px;
- display: flex;
- justify-content: space-between;
- padding-top: 4px;
- }
+  height: 32px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 4px;
+}
 .modalPagos {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 70%;
-  border: 2px solid ;
- border-color: #f5f0f0;
- background-color: white;
- 
+  border: 2px solid;
+  border-color: #f5f0f0;
+  background-color: white;
 }
 .modalProyectos {
   position: absolute;
-  
+
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
- width: 70%;
+  width: 70%;
   height: 60%;
 
-  border: 2px solid ;
- border-color: #f5f0f0;
- background-color: white;
- 
+  border: 2px solid;
+  border-color: #f5f0f0;
+  background-color: white;
 }
 .modalP {
   position: absolute;
-  
-  
- width: 100%;
+
+  width: 100%;
   height: 100%;
 
-  border: 2px solid ;
- border-color: #f5f0f0;
- background-color: white;
- 
+  border: 2px solid;
+  border-color: #f5f0f0;
+  background-color: white;
 }
-.valorDeuda{
+.valorDeuda {
   color: orangered;
 }
-.reportViewer{
+.reportViewer {
   margin: auto;
   width: 100%;
   height: 100%;
 }
-.saveIcon{
+.saveIcon {
   font-size: 24pt !important;
-
 }
-.checkBoxLabel{
+.checkBoxLabel {
   font-size: 10pt;
 }
-.QuoteDetail{
+.QuoteDetail {
   border-bottom: 1px solid rgb(240, 231, 231);
- 
 }

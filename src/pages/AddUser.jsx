@@ -1,23 +1,21 @@
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
+
 } from "firebase/auth";
 
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase_config";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-function Login() {
+function AddUser() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  /*
   const handleCreateAccount = async (event) => {
     event.preventDefault();
     await createUserWithEmailAndPassword(auth, email, password)
@@ -46,50 +44,22 @@ function Login() {
         // ..
       });
   };
-  */
-  const handleSingIn = (event) => {
-    event.preventDefault();
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log("Acceso correcto, bienvenido: ");
-        console.log(user.email);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-
-        switch (errorCode) {
-          case "auth/too-many-requests":
-            alert(
-              "Se ha excedido la cantidad de intentos de inicio de sesión permitidos. Por favor, inténtelo nuevamente más tarde"
-            );
-            break;
-          case "auth/invalid-credential":
-            alert("Email o contraseña inválido, por favor intente nuevamente");
-            break;
-          case "auth/wrong-password":
-            alert("Contraseña incorrecta");
-            break;
-          case "auth/user-not-found":
-            alert("Usuario no encontrado.");
-            break;
-          default:
-            alert(
-              "No se puede iniciar sesión, por favor contactese con el administrador del sistema"
-            );
-        }
-
-        console.log(error.message);
-      });
-  };
-
+ 
   return (
     <div className="containerLogin ">
       <div className="login ">
         <form>
-          <h1>Login</h1>
+          <h1>Registrar</h1>
+          <h2>Usuario</h2>
+          <input
+            style={{ borderRadius: "5px", padding: "5px" }}
+            type="text"
+            name="nombre"
+            placeholder="Nombre de usuario"
+            onChange={() => {
+              setName(event.target.value);
+            }}
+          />
           <h2>Email</h2>
           <input
             style={{ borderRadius: "5px", padding: "5px" }}
@@ -100,7 +70,10 @@ function Login() {
               setEmail(event.target.value);
             }}
           />
-          <h2>Password</h2>
+          <h2>Password
+          <h3 style={{fontSize:'8pt', fontStyle:'italic'}}>{"(Debe tener al menos 6 caracteres)"}</h3>
+          </h2>
+         
           <input
             style={{ borderRadius: "5px", padding: "5px" }}
             type="password"
@@ -111,39 +84,15 @@ function Login() {
             }}
           />
           <div className="buttonContainer">
-            <button onClick={handleSingIn}>Login</button>
+            <button >Registrar</button>
           </div>
-          <div
-            style={{
-              justifyContent: "right",
-              display: "flex",
-              marginTop: "5px",
-              
-              fontStyle: "italic",
-              fontSize: "8pt",
-            }}
-          >
-          <p>
-          <NavLink to="/resetPassword">
-          <a >Olvidé mi contraseña</a>
-          </NavLink>
-           
-            </p>
-          </div>
+         
         </form>
 
-        <p>
-          Welcome to Nexhub LIVING, if you don't have an account, please{" "}
-          <NavLink to="/registerUser">
-          <a >
-            {" "}
-            Register
-          </a>
-          </NavLink>
-        </p>
+      
       </div>
     </div>
   );
 }
 
-export default Login;
+export default AddUser;

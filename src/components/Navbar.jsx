@@ -22,7 +22,7 @@ function Navbar() {
     setAnchorEl(null);
   };
   return (
-    <div className=" navbar bg-gray-100 h-12 border-b-2  ">
+    <div className=" navbar  h-12 ">
       <div className=" flex justify-end">
     
         <a>
@@ -40,7 +40,7 @@ function Navbar() {
             </IconButton>
           </Tooltip>
         </a>
-        <a className="text-black pt-1 mr-4 ml-2">NexHub LIVING</a>
+        <a className="text-white font-extrabold pt-1 mr-4 ml-2 ">NexHub LIVING</a>
 
         <Menu
           anchorEl={anchorEl}
@@ -78,17 +78,17 @@ function Navbar() {
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
           <MenuItem onClick={handleClose}>
-            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/">Login</NavLink>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <Avatar /> My account
+            <Avatar /> Mi Perfil
           </MenuItem>
           <Divider />
           <MenuItem onClick={handleClose}>
             <ListItemIcon>
               <Settings fontSize="small" />
             </ListItemIcon>
-            Settings
+            Configuración
           </MenuItem>
           <MenuItem onClick={handleClose}>
             <ListItemIcon>
