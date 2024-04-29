@@ -13,7 +13,13 @@ import Diversity2Icon from "@mui/icons-material/Diversity2";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Groups3Outlined } from "@mui/icons-material";
 import logo from "../assets/nexhub1.png";
+import {useContext} from "react";
+import {UserContext} from "../context/User/UserContext";
+
 function Sidebar() {
+
+const {currentUser}=useContext(UserContext);
+
   return (
     <div className="sidebar flex-none h-screen ">
     <div className="containerLogo">
@@ -23,52 +29,52 @@ function Sidebar() {
         <ul className="text-white ">
           <li className="p-4 hover:bg-lime-400 rounded-md ">
          
-            <NavLink to="/dashboard">
+            <NavLink to={currentUser?"/dashboard":"/"}>
               <DashboardIcon  className="mr-4"/>
-              DASHBOARD
+              DASHBOARD 
             </NavLink>
            
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md ">
-            <NavLink to="/payments">
+            <NavLink to={currentUser?"/payments":"/"}>
               <RequestQuoteIcon className="mr-4"/>
               COBROS/PAGOS
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md " >
-            <NavLink to="/cotizaciones">
+            <NavLink to={currentUser?"/cotizaciones":"/"}>
               <ReceiptIcon className="mr-4"/>
               COTIZACIONES
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to="/projects" >
+            <NavLink to={currentUser?"/projects":"/"} >
               <HomeWorkIcon className="mr-4" />
                PROYECTOS
              
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to="/inventario">
+            <NavLink to={currentUser?"/inventario":"/"}>
               <Groups3Outlined className="mr-4"/>
               NÓMINA
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to="/mantenimiento">
+            <NavLink to={currentUser?"/mantenimiento":"/"}>
               <EngineeringIcon  className="mr-4"/>
               MANTENIMIENTO
             </NavLink>
           </li>
 
           <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to="/neighbors">
+            <NavLink to={currentUser?"/neighbors":"/"}>
               <Diversity2Icon  className="mr-4"/>
               VECINOS
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to="/settings">
+            <NavLink to={currentUser?"/settings":"/"}>
               <SettingsIcon  className="mr-4"/>
               CONFIGURAR EDIFICIO
             </NavLink>
