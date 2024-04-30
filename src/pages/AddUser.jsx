@@ -1,6 +1,8 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 import { initializeApp } from "firebase/app";
+import { getFirestore,  doc,  setDoc } from "firebase/firestore";
+
 import { firebaseConfig } from "../firebase_config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,19 +13,21 @@ function AddUser() {
   const [address,setAddress]=useState("");
   const [phone,setPhone]=useState("");
   const navigate = useNavigate();
+  const [rol, setRol] = useState("");
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+const  db=getFirestore(app);
+
+
   const handleCreateAccount = async (event) => {
     event.preventDefault();
-    await createUserWithEmailAndPassword(auth, email, password)
+   const infoUser= await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
-      //  console.log(user.email);
         alert('Usuario '+name+', creado con exito');
-        navigate("/");
-        // ...
+        return userCredential;
+      
       })
       .catch((error) => {
         switch (error.code) {
@@ -42,6 +46,10 @@ function AddUser() {
         }
         // ..
       });
+      console.log(infoUser.user.uid);
+      const docuRef=doc(db,`usuarios/${infoUser.user.uid}`);
+      setDoc(docuRef,{direccion:address,email:email,nombre_alias:name,rol:rol,telefono:phone});
+      navigate("/");
   };
 
   return (
@@ -77,6 +85,19 @@ function AddUser() {
             placeholder="Teléfono"
             onChange={() => {
               setPhone(event.target.value);
+            }}
+          />
+          </div>
+          {/**combo box para seleccionar el rol del usuario */}
+          <div>
+          <h2>Rol</h2>
+          <input
+            style={{ borderRadius: "5px", padding: "5px" }}
+            type="text"
+            name="rol"
+            placeholder="Rol"
+            onChange={() => {
+              setRol(event.target.value);
             }}
           />
           </div>

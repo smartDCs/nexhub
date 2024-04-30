@@ -1,5 +1,5 @@
 import {  signInWithEmailAndPassword } from "firebase/auth";
-
+import { getFirestore,getDoc, doc } from "firebase/firestore";
 
 import { useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  
+  const db=getFirestore();
 
   const {auth,userChange}=useContext(UserContext);
 
@@ -20,8 +20,18 @@ function Login() {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        const docuRef=doc(db,`usuarios/${user.uid}`)
+         getDoc(docuRef).then((docuData)=>{
+          const rol=docuData.data().rol;
+          const  nombre=docuData.data().nombre_alias;
+        
+          userChange({user:nombre,rol:rol,userUid:user.uid});
+          //console.log(userData);
+        }).catch((error)=>{
+          console.log(error);
+        });
+
      
-        userChange(user.email);
         navigate("/dashboard");
       })
       .catch((error) => {

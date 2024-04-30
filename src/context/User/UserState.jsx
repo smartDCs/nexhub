@@ -7,16 +7,17 @@ const UserState=({children})=>{
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-const  [currentUser, setCurrentUser] = useState("");
+const  [userData,setUserData]=useState({user:"",userUid:"",rol:""});
 
-function userChange(user){
-setCurrentUser(user);
+
+function userChange(userLogged){
+setUserData(userLogged);
 }
 
 
     return(
        <UserContext.Provider
-       value={{currentUser,userChange, auth}}
+       value={{userData,userChange, auth}}
        >
         {children}
        </UserContext.Provider>

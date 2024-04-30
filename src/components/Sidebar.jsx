@@ -18,7 +18,7 @@ import {UserContext} from "../context/User/UserContext";
 
 function Sidebar() {
 
-const {currentUser}=useContext(UserContext);
+const {userData}=useContext(UserContext);
 
   return (
     <div className="sidebar flex-none h-screen ">
@@ -29,52 +29,58 @@ const {currentUser}=useContext(UserContext);
         <ul className="text-white ">
           <li className="p-4 hover:bg-lime-400 rounded-md ">
          
-            <NavLink to={currentUser?"/dashboard":"/"}>
+            <NavLink to={userData.user?"/dashboard":"/"}>
               <DashboardIcon  className="mr-4"/>
               DASHBOARD 
             </NavLink>
            
           </li>
-          <li className="p-4 hover:bg-lime-400 rounded-md ">
-            <NavLink to={currentUser?"/payments":"/"}>
+          <li className="p-4 hover:bg-lime-400 rounded-md "
+           hidden={userData.rol==="SuperAdmin"?false:true}
+          
+          >
+            <NavLink to={userData.user?"/payments":"/"}>
               <RequestQuoteIcon className="mr-4"/>
               COBROS/PAGOS
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md " >
-            <NavLink to={currentUser?"/cotizaciones":"/"}>
+            <NavLink to={userData.user?"/cotizaciones":"/"}>
               <ReceiptIcon className="mr-4"/>
               COTIZACIONES
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to={currentUser?"/projects":"/"} >
+            <NavLink to={userData.user?"/projects":"/"} >
               <HomeWorkIcon className="mr-4" />
                PROYECTOS
              
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to={currentUser?"/inventario":"/"}>
+            <NavLink to={userData.user?"/inventario":"/"}>
               <Groups3Outlined className="mr-4"/>
               NÓMINA
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to={currentUser?"/mantenimiento":"/"}>
+            <NavLink to={userData.user?"/mantenimiento":"/"}>
               <EngineeringIcon  className="mr-4"/>
               MANTENIMIENTO
             </NavLink>
           </li>
 
           <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to={currentUser?"/neighbors":"/"}>
+            <NavLink to={userData.user?"/neighbors":"/"}>
               <Diversity2Icon  className="mr-4"/>
               VECINOS
             </NavLink>
           </li>
-          <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to={currentUser?"/settings":"/"}>
+          <li className="p-4 hover:bg-lime-400 rounded-md"
+          hidden={userData.rol==="SuperAdmin"?false:true}
+          
+          >
+            <NavLink to={userData.user?"/settings":"/"}>
               <SettingsIcon  className="mr-4"/>
               CONFIGURAR EDIFICIO
             </NavLink>

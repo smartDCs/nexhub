@@ -16,7 +16,7 @@ import { signOut } from "firebase/auth";
 
 
 function Navbar() {
-  const { auth, currentUser, userChange } = useContext(UserContext);
+  const { auth, userData, userChange } = useContext(UserContext);
 
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -62,8 +62,9 @@ function Navbar() {
           </Tooltip>
         </a>
         <a className="text-white font-extrabold pt-1 mr-4 ml-2 ">
-          {currentUser?currentUser:"User"}
+        {  userData.user?userData.user:"User" }
         </a>
+       
 
         <Menu
           anchorEl={anchorEl}
