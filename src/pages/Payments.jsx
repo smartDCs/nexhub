@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@mui/material";
-import React, { useState } from "react";
+import  { useState, useContext, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
 import { BsCashCoin } from "react-icons/bs";
@@ -14,10 +14,30 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+
+//Importamos los context
+import { UserContext } from "../context/User/UserContext";
 // import material icons
 import { Save, Print } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
+//importamos la base de datos
+import { getFirestore,getDocs,doc,collection, query } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../firebase_config";
+
+
+
+
 function Payments() {
+  //inicializamos la DB
+  const app = initializeApp(firebaseConfig);
+
+  const db = getFirestore(app);
+//Declaramos los contextos que vamos a utilizar
+const {userData}=useContext(UserContext);
+const user=userData.user;
+const rol=userData.rol;
+const userUid=userData.userUid;
   let navigate = useNavigate();
   const [responsive, setResponsive] = useState("simple");
   const [tableBodyHeight, setTableBodyHeight] = useState("400px");
@@ -29,11 +49,12 @@ function Payments() {
   const [filterBtn, setFilterBtn] = useState(true);
 
   const [porCobrar, setporCobrar] = useState(5342.23);
-  const [porPagar, setporPagar] = useState(5342.23);
+  const [porPagar, setporPagar] = useState(0);
   const [deuda, setDeuda] = useState();
   const [id, setId] = useState("");
   const [table, setTable] = useState("");
-
+const [data,setData]=useState([]);
+//const [pagosData,setPagosData]=useState(null);
   /**
    * variables para la ventana modal
    */
@@ -146,59 +167,31 @@ function Payments() {
 
           return (
             <button onClick={handleChange} className="btnPay">
-              {" "}
-              Pagar &nbsp;
-              <BsCashCoin className=" size-10 pt-0 pl-2 pb-4" />
+              Pagar 
             </button>
           );
         },
       },
     },
     {
-      name: "name",
-      label: "Nombre",
+      name: "beneficiario",
+      label: "Beneficiario",
     },
     {
       name: "date",
-      label: "Fecha",
+      label: "Fecha máximo de pago",
     },
     {
       name: "monto",
       label: "Monto",
     },
-  ];
-
-  const data = [
     {
-      name: "Joe Jhonson James",
-      date: "2024/02/03",
-      monto: "34.5",
-    },
-    {
-      name: "John Walsh",
-      date: "2024/02/03",
-      monto: "1235",
-    },
-    { name: "Bob Herm", date: "2024/02/03", monto: "1234.5" },
-    {
-      name: "James Houston",
-      date: "2024/02/03",
-      monto: "870",
-    },
-    { name: "Joe James", date: "2024/02/03", monto: "1234.5" },
-    {
-      name: "John Walsh",
-      date: "2024/02/03",
-      monto: "1234.5",
-    },
-    { name: "Bob Herm", date: "2024/02/03", monto: "1234.5" },
-    {
-      name: "James Houston",
-      date: "2024/02/03",
-      monto: "1234.5",
+      name: "concepto",
+      label: "Por concepto de",
     },
   ];
 
+ 
   /**
    * Funcion que se encarga del tipo de pago
    */
@@ -220,14 +213,52 @@ function Payments() {
     guardarPago();
     navigate("/report_payment");
   }
+/**
+ * Leemos la DB y obtenemos los pagos pendientes del usuario logueado
+ * 
+ */
+
+const coleccion=query(collection(db,"/pagos/fSfOHitePuYEIJ1CtRH0jMOJScs1/registros"));
+  const getPagos=async()=>{
+    const dataPagos=await getDocs(coleccion);
+   
+    const pagosData=dataPagos.docs.map((doc)=>({
+      beneficiario: doc.data().beneficiario,
+      monto: doc.data().monto,
+      date: doc.data().fechaPago,
+      concepto: doc.data().concepto,
+    }));
+  
+   
+    setData(pagosData);
+
+  
+
+
+
+  }
+    
+ 
+useEffect(()=>{
+ getPagos();
+ const suma=data.reduce((total,pago)=>total+parseFloat(pago.monto),0);
+ console.log("suma ",suma);
+setporPagar(suma);
+
+
+},[]);
+
+
+
   return (
     <>
-      <Card variant="elevation" className="m-2 mainCard">
-        <div className="grid grid-cols-2 gap-2 m-2">
+  {rol==="Admin"?
+      <Card variant="elevation" className="m-4 ">
+      <CardContent>
           <div>
             <div className="headerCardPayments bg-yellow-100 pl-5 pr-5">
               <h1>
-                Cobros pendientes:{" "}
+                Cobros pendientes:
                 <span>
                   <p className="text-green-600">${porCobrar}</p>{" "}
                 </span>
@@ -243,7 +274,19 @@ function Payments() {
               options={options}
             />
           </div>
-          <div>
+          </CardContent>
+      </Card>
+    :<></>}
+
+{/**
+Tabla de pagos pendientes
+ */}
+
+      <Card
+      variant="elevation" 
+      className="m-4 ">
+      <CardContent>
+      <div>
             <div className="headerCardPayments bg-yellow-50 pl-5 pr-5">
               <h1>
                 Pagos pendientes:{" "}
@@ -256,14 +299,17 @@ function Payments() {
               </NavLink>
             </div>
             <div>
+          
+            
               <MUIDataTable
                 data={data}
                 columns={columnsPagos}
                 options={options}
               />
+               
             </div>
           </div>
-        </div>
+          </CardContent>
       </Card>
 
       {/** Ventana modal */}

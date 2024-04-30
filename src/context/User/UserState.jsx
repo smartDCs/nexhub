@@ -7,7 +7,7 @@ const UserState=({children})=>{
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-const  [userData,setUserData]=useState({user:"",userUid:"",rol:""});
+const  [userData,setUserData]=useState({user:"",userUid:"",rol:"",ruc:""});
 
 
 function userChange(userLogged){

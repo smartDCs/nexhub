@@ -9,8 +9,9 @@ import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 
 import EngineeringIcon from "@mui/icons-material/Engineering";
-import Diversity2Icon from "@mui/icons-material/Diversity2";
-import SettingsIcon from "@mui/icons-material/Settings";
+
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import { FaBuildingUser } from "react-icons/fa6";
 import { Groups3Outlined } from "@mui/icons-material";
 import logo from "../assets/nexhub1.png";
 import {useContext} from "react";
@@ -36,10 +37,10 @@ const {userData}=useContext(UserContext);
            
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md "
-           hidden={userData.rol==="SuperAdmin"?false:true}
+         //  hidden={userData.rol==="SuperAdmin"?false:true}
           
           >
-            <NavLink to={userData.user?"/payments":"/"}>
+            <NavLink to={userData.user?"/payments":"/payments"}>
               <RequestQuoteIcon className="mr-4"/>
               COBROS/PAGOS
             </NavLink>
@@ -70,10 +71,14 @@ const {userData}=useContext(UserContext);
             </NavLink>
           </li>
 
-          <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to={userData.user?"/neighbors":"/"}>
-              <Diversity2Icon  className="mr-4"/>
-              VECINOS
+          <li className="p-4 hover:bg-lime-400 rounded-md justify-between flex">
+            <NavLink to={userData.user?"/neighbors":"/"}
+            style={{display:"flex",justifyContent:"space-between", alignItems:"center"}}
+            
+            >
+              <FaBuildingUser  className="mr-4" style={{fontSize:'18pt'}}/>
+              <label>ALICUOTAS</label>
+              
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md"
@@ -81,8 +86,8 @@ const {userData}=useContext(UserContext);
           
           >
             <NavLink to={userData.user?"/settings":"/"}>
-              <SettingsIcon  className="mr-4"/>
-              CONFIGURAR EDIFICIO
+              <GroupAddIcon  className="mr-4"/>
+              AGREGAR USUARIO
             </NavLink>
           </li>
         </ul>

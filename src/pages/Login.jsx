@@ -4,12 +4,16 @@ import { getFirestore,getDoc, doc } from "firebase/firestore";
 import { useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/User/UserContext";
+import { firebaseConfig } from "../firebase_config";
+import { initializeApp } from "firebase/app";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const db=getFirestore();
+  const app = initializeApp(firebaseConfig);
+
+  const db = getFirestore(app);
 
   const {auth,userChange}=useContext(UserContext);
 
