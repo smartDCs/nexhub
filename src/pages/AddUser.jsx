@@ -1,12 +1,11 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import {doc, setDoc } from "firebase/firestore";
 
-import { firebaseConfig } from "../firebase_config";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Autocomplete, TextField } from "@mui/material";
+import { UserContext } from "../context/User/UserContext";
 function AddUser() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,9 +18,9 @@ function AddUser() {
   const [value, setValue] = useState(options[0]);
   const [ruc, setRuc] = useState("");
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+  const {auth,db}=useContext(UserContext);
+
+  
 
   const handleCreateAccount = async (event) => {
     event.preventDefault();

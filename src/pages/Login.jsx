@@ -1,21 +1,16 @@
-import {  signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore,getDoc, doc } from "firebase/firestore";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { getDoc, doc } from "firebase/firestore";
 
 import { useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/User/UserContext";
-import { firebaseConfig } from "../firebase_config";
-import { initializeApp } from "firebase/app";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const app = initializeApp(firebaseConfig);
 
-  const db = getFirestore(app);
-
-  const {auth,userChange}=useContext(UserContext);
+  const { auth, userChange, db } = useContext(UserContext);
 
   const handleSingIn = (event) => {
     event.preventDefault();
@@ -24,18 +19,22 @@ function Login() {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        const docuRef=doc(db,`usuarios/${user.uid}`)
-         getDoc(docuRef).then((docuData)=>{
-          const rol=docuData.data().rol;
-          const  nombre=docuData.data().nombre_alias;
-        
-          userChange({user:nombre,rol:rol,userUid:user.uid});
-          //console.log(userData);
-        }).catch((error)=>{
-          console.log(error);
-        });
+        const docuRef = doc(db, `usuarios/${user.uid}`);
+        getDoc(docuRef)
+          .then((docuData) => {
+            
+            userChange({
+              user: docuData.data().nombre_alias,
+              rol: docuData.data().rol,
+              userUid: user.uid,
+              ruc: docuData.data().ci_ruc,
+            });
+            //console.log(userData);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
 
-     
         navigate("/dashboard");
       })
       .catch((error) => {

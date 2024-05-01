@@ -21,32 +21,20 @@ import { UserContext } from "../context/User/UserContext";
 import { Save, Print } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 //importamos la base de datos
-import { getFirestore,getDocs,doc,collection, query } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../firebase_config";
-
-
-
+import {getDocs,collection, query, where } from "firebase/firestore";
 
 function Payments() {
-  //inicializamos la DB
-  const app = initializeApp(firebaseConfig);
-
-  const db = getFirestore(app);
+ 
 //Declaramos los contextos que vamos a utilizar
-const {userData}=useContext(UserContext);
-const user=userData.user;
+const {userData,db}=useContext(UserContext);
+
 const rol=userData.rol;
 const userUid=userData.userUid;
   let navigate = useNavigate();
-  const [responsive, setResponsive] = useState("simple");
-  const [tableBodyHeight, setTableBodyHeight] = useState("400px");
-  const [tableBodyMaxHeight, setTableBodyMaxHeight] = useState("100%");
-  const [searchBtn, setSearchBtn] = useState(true);
-  const [downloadBtn, setDownloadBtn] = useState(true);
-  const [printBtn, setPrintBtn] = useState(true);
-  const [viewColumnBtn, setViewColumnBtn] = useState(true);
-  const [filterBtn, setFilterBtn] = useState(true);
+  const responsive="simple";
+  const tableBodyHeight="400px";
+  const tableBodyMaxHeight= "100%";
+ 
 
   const [porCobrar, setporCobrar] = useState(5342.23);
   const [porPagar, setporPagar] = useState(0);
@@ -69,11 +57,11 @@ const [data,setData]=useState([]);
   const handleClose = () => setOpen(false);
 
   const options = {
-    search: searchBtn,
-    download: downloadBtn,
-    print: printBtn,
-    viewColumns: viewColumnBtn,
-    filter: filterBtn,
+    search: true,
+    download: true,
+    print: false,
+    viewColumns:false,
+    filter: true,
     filterType: "dropdown",
     responsive,
     tableBodyHeight,
@@ -171,23 +159,76 @@ const [data,setData]=useState([]);
             </button>
           );
         },
+        setCellProps: () => ({
+          style: {with:"5%", margin: 0, padding: 0, },
+        }),
       },
     },
     {
       name: "beneficiario",
-      label: "Beneficiario",
+      options: {
+        setCellProps: () => ({
+          style: { width: "30%", margin: 0, padding: 0, fontSize: 11 },
+        }),
+        customHeadLabelRender: () => {
+          return <div className="encabezadoTabla">Beneficiario</div>;
+        },
+      },
+
     },
     {
       name: "date",
-      label: "Fecha máximo de pago",
+      options: {
+        setCellProps: () => ({
+          style: {
+            width: "15%",
+            fontSize: 11,
+            margin: 0,
+            padding: 0,
+            textAlign: "center",
+          },
+        }),
+
+        customHeadLabelRender: () => {
+          return <div className="encabezadoTabla">Fecha</div>;
+        },
+      },
     },
     {
       name: "monto",
-      label: "Monto",
+      options: {
+        setCellProps: () => ({
+          style: {
+            width: "15%",
+            backgroundColor: "rgba(255,180,50,0.6)",
+            margin: 0,
+            padding: 0,
+            fontSize: 11,
+            textAlign: "center",
+          },
+        }),
+        customHeadLabelRender: () => {
+          return <div className="encabezadoTabla">Monto $</div>;
+        },
+      },
     },
     {
       name: "concepto",
-      label: "Por concepto de",
+      options: {
+        setCellProps: () => ({
+          style: {
+            width: "25%",
+
+            margin: 0,
+            padding: 0,
+            fontSize: 11,
+          },
+        }),
+
+        customHeadLabelRender: () => {
+          return <div className="encabezadoTabla">Por concepto de</div>;
+        },
+      },
     },
   ];
 
@@ -218,7 +259,8 @@ const [data,setData]=useState([]);
  * 
  */
 
-const coleccion=query(collection(db,"/pagos/fSfOHitePuYEIJ1CtRH0jMOJScs1/registros"));
+const coleccion=query(collection(db,`/pagos/${userUid}/registros`),where("status","==","pendiente"));
+
   const getPagos=async()=>{
     const dataPagos=await getDocs(coleccion);
    
@@ -233,20 +275,17 @@ const coleccion=query(collection(db,"/pagos/fSfOHitePuYEIJ1CtRH0jMOJScs1/registr
     setData(pagosData);
 
   
-
-
-
   }
     
  
 useEffect(()=>{
  getPagos();
  const suma=data.reduce((total,pago)=>total+parseFloat(pago.monto),0);
- console.log("suma ",suma);
+
 setporPagar(suma);
 
 
-},[]);
+},[data]);
 
 
 
