@@ -5,16 +5,14 @@ import MUIDataTable from "mui-datatables";
 
 import DoneIcon from "@mui/icons-material/Done";
 import { collection, getDocs, query, where } from "firebase/firestore";
-
+import { opciones } from "../components/TableSettings";
 function HistoricoCobros() {
   const { userData, db } = useContext(UserContext);
   const user = userData.user;
 
   const userUid = userData.userUid;
   const [data, setData] = useState([]);
-  const responsive = "standard";
-  const tableBodyHeight = "400px";
-  const tableBodyMaxHeight = "100%";
+ 
  
   const coleccion = query(
     collection(db, `/cobros/${userUid}/registros`),
@@ -27,7 +25,7 @@ function HistoricoCobros() {
     const cobrosData = dataCobros.docs.map((doc) => ({
       deudor: doc.data().deudor,
       monto: doc.data().monto,
-      date: doc.data().fechaPago,
+      date: doc.data().fechaCobro,
       concepto: doc.data().concepto,
       formaPago: doc.data().formaPago,
     }));
@@ -39,56 +37,7 @@ function HistoricoCobros() {
     getCobros();
   }, []);
 
-  const options = {
-    search: true,
-    download: true,
-    print: true,
-    viewColumns: false,
-    filter: true,
-    filterType: "dropdown",
-    responsive,
-    tableBodyHeight,
-    tableBodyMaxHeight,
-    selectableRows: "none",
-    textLabels: {
-      body: {
-        noMatch: "No se encontraron coincidencias",
-        toolTip: "Ordenar",
-        columnHeaderTooltip: (column) => `Ordenar por ${column.label}`,
-      },
-      pagination: {
-        next: "Siguiente",
-        previous: "Atras",
-        rowsPerPage: "Filas:",
-        displayRows: "de",
-      },
-      toolbar: {
-        search: "Buscar",
-        downloadCsv: "Descargar CSV",
-        print: "Imprimir",
-        viewColumns: "Ver Columnas",
-        filterTable: "Filtrar tabla",
-      },
-      filter: {
-        all: "Todo",
-        title: "Filtros",
-        reset: "Limpiar filtros",
-      },
-      viewColumns: {
-        title: "Mostrar columnas",
-        titleAria: "Mostrar/Ocultar columnas",
-      },
-      selectedRows: {
-        text: "Fila(s) seleccionadas",
-        delete: "Delete",
-        deleteAria: "Delete Selected Rows",
-      },
-    },
-    downloadOptions:{
-      filename:"Historial de Cobros",
-    }
-
-  };
+  
   const columnsPagos = [
     {
       name: "payment",
@@ -106,13 +55,13 @@ function HistoricoCobros() {
       },
     },
     {
-      name: "beneficiario",
+      name: "deudor",
       options: {
         setCellProps: () => ({
           style: { width: "25%", margin: 0, padding: 0, fontSize: 11 },
         }),
         customHeadLabelRender: () => {
-          return <div className="encabezadoTabla">Beneficiario</div>;
+          return <div className="encabezadoTabla">Deudor</div>;
         },
       },
     },
@@ -227,7 +176,7 @@ function HistoricoCobros() {
             title={"Historial de cobros"}
             data={data}
             columns={columnsPagos}
-            options={options}
+            options={opciones("Historico de cobros")}
           />
         </CardContent>
       </Card>

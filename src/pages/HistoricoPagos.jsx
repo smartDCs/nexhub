@@ -5,16 +5,14 @@ import MUIDataTable from "mui-datatables";
 
 import DoneIcon from "@mui/icons-material/Done";
 import { collection, getDocs, query, where } from "firebase/firestore";
-
+import { opciones } from "../components/TableSettings";
 function HistoricoPagos() {
   const { userData, db } = useContext(UserContext);
   const user = userData.user;
 
   const userUid = userData.userUid;
   const [data, setData] = useState([]);
-  const responsive = "standard";
-  const tableBodyHeight = "400px";
-  const tableBodyMaxHeight = "100%";
+ 
  
   const coleccion = query(
     collection(db, `/pagos/${userUid}/registros`),
@@ -39,55 +37,7 @@ function HistoricoPagos() {
     getPagos();
   }, []);
 
-  const options = {
-    search: true,
-    download: true,
-    //print: true,
-    //viewColumns: true,
-    filter: true,
-    filterType: "dropdown",
-    responsive,
-    tableBodyHeight,
-    tableBodyMaxHeight,
-    selectableRows: "none",
-    textLabels: {
-      body: {
-        noMatch: "No se encontraron coincidencias",
-        toolTip: "Ordenar",
-        columnHeaderTooltip: (column) => `Ordenar por ${column.label}`,
-      },
-      pagination: {
-        next: "Siguiente",
-        previous: "Atras",
-        rowsPerPage: "Filas:",
-        displayRows: "de",
-      },
-      toolbar: {
-        search: "Buscar",
-        downloadCsv: "Descargar CSV",
-        print: "Imprimir",
-        viewColumns: "Ver Columnas",
-        filterTable: "Filtrar tabla",
-      },
-      filter: {
-        all: "Todo",
-        title: "Filtros",
-        reset: "Limpiar filtros",
-      },
-      viewColumns: {
-        title: "Mostrar columnas",
-        titleAria: "Mostrar/Ocultar columnas",
-      },
-      selectedRows: {
-        text: "Fila(s) seleccionadas",
-        delete: "Delete",
-        deleteAria: "Delete Selected Rows",
-      },
-    },
-    downloadOptions:{
-      filename:"Historial de pagos",
-    }
-  };
+ 
   const columnsPagos = [
     {
       name: "payment",
@@ -226,7 +176,7 @@ function HistoricoPagos() {
             title={"Historial de pagos"}
             data={data}
             columns={columnsPagos}
-            options={options}
+            options={opciones("Historico de pagos")}
           />
         </CardContent>
       </Card>

@@ -22,7 +22,7 @@ import { Save, Print } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 //importamos la base de datos
 import { getDocs, collection, query, where } from "firebase/firestore";
-
+import { opciones } from "../components/TableSettings";
 function Payments() {
   //Declaramos los contextos que vamos a utilizar
   const { userData, db } = useContext(UserContext);
@@ -30,9 +30,7 @@ function Payments() {
   const rol = userData.rol;
   const userUid = userData.userUid;
   let navigate = useNavigate();
-  const responsive = "simple";
-  const tableBodyHeight = "200px";
-  const tableBodyMaxHeight = "100%";
+
 
   const [porCobrar, setporCobrar] = useState(0);
   const [porPagar, setporPagar] = useState(0);
@@ -53,59 +51,6 @@ const [dataCobros,setDataCobros]=useState([]);
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
-function opciones(nombreArchivo){
-  const options = {
-    search: true,
-    download: true,
-    print: false,
-    viewColumns: false,
-    filter: true,
-    filterType: "dropdown",
-    responsive,
-    tableBodyHeight,
-    tableBodyMaxHeight,
-    selectableRows: "none",
-    textLabels: {
-      body: {
-        noMatch: "No se encontraron coincidencias",
-        toolTip: "Ordenar",
-        columnHeaderTooltip: (column) => `Ordenar por ${column.label}`,
-      },
-      pagination: {
-        next: "Siguiente",
-        previous: "Atras",
-        rowsPerPage: "Filas:",
-        displayRows: "de",
-      },
-      toolbar: {
-        search: "Buscar",
-        downloadCsv: "Descargar CSV",
-        print: "Imprimir",
-        viewColumns: "Ver Columnas",
-        filterTable: "Filtrar tabla",
-      },
-      filter: {
-        all: "Todo",
-        title: "Filtros",
-        reset: "Limpiar filtros",
-      },
-      viewColumns: {
-        title: "Mostrar columnas",
-        titleAria: "Mostrar/Ocultar columnas",
-      },
-      selectedRows: {
-        text: "Fila(s) seleccionadas",
-        delete: "Delete",
-        deleteAria: "Delete Selected Rows",
-      },
-    },
-    downloadOptions:{
-      filename:nombreArchivo,
-    }
-  };
-  return options;
-}
-  
 
   const columnsCobros = [
     {
@@ -316,7 +261,7 @@ function opciones(nombreArchivo){
    *
    */
 
-  /*
+
 const coleccionPagos=query(collection(db,`/pagos/${userUid}/registros`),where("status","==","pendiente"));
 
   const getPagos=async()=>{
@@ -334,12 +279,12 @@ const coleccionPagos=query(collection(db,`/pagos/${userUid}/registros`),where("s
 
   
   }
-    */
- /*
-const coleccionCobros=query(collection(db,`/pagos/${userUid}/registros`),where("status","==","pendiente"));
+    
+ 
+const coleccionCobros=query(collection(db,`/cobros/${userUid}/registros`),where("status","==","pendiente"));
 
   const getCobros=async()=>{
-    const dataPagos=await getDocs(coleccionCobros);
+    const dataCobros=await getDocs(coleccionCobros);
    
     const cobrosData=dataCobros.docs.map((doc)=>({
       deudor: doc.data().deudor,
@@ -353,10 +298,10 @@ const coleccionCobros=query(collection(db,`/pagos/${userUid}/registros`),where("
 
   
   }
-    */
+    
   useEffect(() => {
-    //getPagos();
-    //getCobros();
+    getPagos();
+    getCobros();
     const suma = data.reduce(
       (total, pago) => total + parseFloat(pago.monto),
       0
@@ -364,75 +309,8 @@ const coleccionCobros=query(collection(db,`/pagos/${userUid}/registros`),where("
 
     setporPagar(suma);
    
-    setData([
-      {
-        beneficiario: "Juan Perez",
-        date: "21/03/2024",
-        monto: "123.4",
-        concepto: "prueba",
-      },
-      {
-        beneficiario: "Juan Perez",
-        date: "21/03/2024",
-        monto: "123.4",
-        concepto: "prueba",
-      },
-      {
-        beneficiario: "Juan Perez",
-        date: "21/03/2024",
-        monto: "123.4",
-        concepto: "prueba",
-      },
-      {
-        beneficiario: "Juan Perez",
-        date: "21/03/2024",
-        monto: "123.4",
-        concepto: "prueba",
-      },
-      {
-        beneficiario: "Juan Perez",
-        date: "21/03/2024",
-        monto: "123.4",
-        concepto: "prueba",
-      },
-      {
-        beneficiario: "Juan Perez",
-        date: "21/03/2024",
-        monto: "123.4",
-        concepto: "prueba",
-      },
-      {
-        beneficiario: "Juan Perez",
-        date: "21/03/2024",
-        monto: "123.4",
-        concepto: "prueba",
-      },
-      {
-        beneficiario: "Juan Perez",
-        date: "21/03/2024",
-        monto: "123.4",
-        concepto: "prueba",
-      },
-      {
-        beneficiario: "Juan Perez",
-        date: "21/03/2024",
-        monto: "123.4",
-        concepto: "prueba",
-      },
-      {
-        beneficiario: "Juan Perez",
-        date: "21/03/2024",
-        monto: "123.4",
-        concepto: "prueba",
-      },
-      {
-        beneficiario: "Juan Perez",
-        date: "21/03/2024",
-        monto: "123.4",
-        concepto: "prueba",
-      },
-    ]);
-  setDataCobros(data)
+    
+  
   const suma1 = dataCobros.reduce(
     (total, pago) => total + parseFloat(pago.monto),
     0
@@ -445,7 +323,7 @@ const coleccionCobros=query(collection(db,`/pagos/${userUid}/registros`),where("
   return (
     <>
 
-      {rol === "" ? (
+      {rol === "User" ? (
         <Card variant="elevation" className="m-4 ">
           <CardContent>
             <div>
