@@ -6,7 +6,7 @@ import MUIDataTable from "mui-datatables";
 import DoneIcon from "@mui/icons-material/Done";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
-function HistoricoPagos() {
+function HistoricoCobros() {
   const { userData, db } = useContext(UserContext);
   const user = userData.user;
 
@@ -17,33 +17,33 @@ function HistoricoPagos() {
   const tableBodyMaxHeight = "100%";
  
   const coleccion = query(
-    collection(db, `/pagos/${userUid}/registros`),
+    collection(db, `/cobros/${userUid}/registros`),
     where("status", "==", "cancelado")
   );
 
-  const getPagos = async () => {
-    const dataPagos = await getDocs(coleccion);
+  const getCobros = async () => {
+    const dataCobros = await getDocs(coleccion);
 
-    const pagosData = dataPagos.docs.map((doc) => ({
-      beneficiario: doc.data().beneficiario,
+    const cobrosData = dataCobros.docs.map((doc) => ({
+      deudor: doc.data().deudor,
       monto: doc.data().monto,
       date: doc.data().fechaPago,
       concepto: doc.data().concepto,
       formaPago: doc.data().formaPago,
     }));
 
-    setData(pagosData);
+    setData(cobrosData);
   };
 
   useEffect(() => {
-    getPagos();
+    getCobros();
   }, []);
 
   const options = {
     search: true,
     download: true,
-    //print: true,
-    //viewColumns: true,
+    print: true,
+    viewColumns: false,
     filter: true,
     filterType: "dropdown",
     responsive,
@@ -85,8 +85,9 @@ function HistoricoPagos() {
       },
     },
     downloadOptions:{
-      filename:"Historial de pagos",
+      filename:"Historial de Cobros",
     }
+
   };
   const columnsPagos = [
     {
@@ -223,7 +224,7 @@ function HistoricoPagos() {
       <Card className="m-4">
         <CardContent>
           <MUIDataTable
-            title={"Historial de pagos"}
+            title={"Historial de cobros"}
             data={data}
             columns={columnsPagos}
             options={options}
@@ -234,4 +235,4 @@ function HistoricoPagos() {
   );
 }
 
-export default HistoricoPagos;
+export default HistoricoCobros;

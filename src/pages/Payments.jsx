@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@mui/material";
-import  { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
 import { BsCashCoin } from "react-icons/bs";
@@ -21,28 +21,26 @@ import { UserContext } from "../context/User/UserContext";
 import { Save, Print } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 //importamos la base de datos
-import {getDocs,collection, query, where } from "firebase/firestore";
+import { getDocs, collection, query, where } from "firebase/firestore";
 
 function Payments() {
- 
-//Declaramos los contextos que vamos a utilizar
-const {userData,db}=useContext(UserContext);
+  //Declaramos los contextos que vamos a utilizar
+  const { userData, db } = useContext(UserContext);
 
-const rol=userData.rol;
-const userUid=userData.userUid;
+  const rol = userData.rol;
+  const userUid = userData.userUid;
   let navigate = useNavigate();
-  const responsive="simple";
-  const tableBodyHeight="400px";
-  const tableBodyMaxHeight= "100%";
- 
+  const responsive = "simple";
+  const tableBodyHeight = "200px";
+  const tableBodyMaxHeight = "100%";
 
-  const [porCobrar, setporCobrar] = useState(5342.23);
+  const [porCobrar, setporCobrar] = useState(0);
   const [porPagar, setporPagar] = useState(0);
   const [deuda, setDeuda] = useState();
   const [id, setId] = useState("");
   const [table, setTable] = useState("");
-const [data,setData]=useState([]);
-//const [pagosData,setPagosData]=useState(null);
+  const [data, setData] = useState([]);
+const [dataCobros,setDataCobros]=useState([]);
   /**
    * variables para la ventana modal
    */
@@ -55,12 +53,12 @@ const [data,setData]=useState([]);
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
-
+function opciones(nombreArchivo){
   const options = {
     search: true,
     download: true,
     print: false,
-    viewColumns:false,
+    viewColumns: false,
     filter: true,
     filterType: "dropdown",
     responsive,
@@ -101,7 +99,14 @@ const [data,setData]=useState([]);
         deleteAria: "Delete Selected Rows",
       },
     },
+    downloadOptions:{
+      filename:nombreArchivo,
+    }
   };
+  return options;
+}
+  
+
   const columnsCobros = [
     {
       name: "payment",
@@ -113,30 +118,84 @@ const [data,setData]=useState([]);
         customBodyRender: (value, tableMeta, updateValue) => {
           const handleChange = (event) => {
             const id = tableMeta.rowData[1];
-            handleOpen(id, "Cobros", tableMeta.rowData[3]);
+            handleOpen(id, "Pagos", tableMeta.rowData[3]);
           };
 
           return (
             <button onClick={handleChange} className="btnPay">
-              {" "}
-              Pagar &nbsp;
-              <BsCashCoin className=" size-10 pt-0 pl-2 pb-4" />
+              Pagar
             </button>
           );
+        },
+        setCellProps: () => ({
+          style: { with: "5%", margin: 0, padding: 0 },
+        }),
+      },
+    },
+    {
+      name: "deudor",
+      options: {
+        setCellProps: () => ({
+          style: { width: "30%", margin: 0, padding: 0, fontSize: 11 },
+        }),
+        customHeadLabelRender: () => {
+          return <div className="encabezadoTabla">Deudor</div>;
         },
       },
     },
     {
-      name: "name",
-      label: "Nombre",
-    },
-    {
       name: "date",
-      label: "Fecha",
+      options: {
+        setCellProps: () => ({
+          style: {
+            width: "20%",
+            fontSize: 11,
+            margin: 0,
+            padding: 0,
+            textAlign: "center",
+          },
+        }),
+
+        customHeadLabelRender: () => {
+          return <div className="encabezadoTabla">Fecha máxima de cobro</div>;
+        },
+      },
     },
     {
       name: "monto",
-      label: "Monto",
+      options: {
+        setCellProps: () => ({
+          style: {
+            width: "15%",
+            backgroundColor: "rgba(255,180,50,0.6)",
+            margin: 0,
+            padding: 0,
+            fontSize: 11,
+            textAlign: "center",
+          },
+        }),
+        customHeadLabelRender: () => {
+          return <div className="encabezadoTabla">Monto $</div>;
+        },
+      },
+    },
+    {
+      name: "concepto",
+      options: {
+        setCellProps: () => ({
+          style: {
+            width: "25%",
+
+            margin: 0,
+            padding: 0,
+            fontSize: 11,
+          },
+        }),
+
+        customHeadLabelRender: () => {
+          return <div className="encabezadoTabla">Por concepto de</div>;
+        },
+      },
     },
   ];
   const columnsPagos = [
@@ -155,12 +214,12 @@ const [data,setData]=useState([]);
 
           return (
             <button onClick={handleChange} className="btnPay">
-              Pagar 
+              Pagar
             </button>
           );
         },
         setCellProps: () => ({
-          style: {with:"5%", margin: 0, padding: 0, },
+          style: { with: "5%", margin: 0, padding: 0 },
         }),
       },
     },
@@ -174,14 +233,13 @@ const [data,setData]=useState([]);
           return <div className="encabezadoTabla">Beneficiario</div>;
         },
       },
-
     },
     {
       name: "date",
       options: {
         setCellProps: () => ({
           style: {
-            width: "15%",
+            width: "20%",
             fontSize: 11,
             margin: 0,
             padding: 0,
@@ -190,7 +248,7 @@ const [data,setData]=useState([]);
         }),
 
         customHeadLabelRender: () => {
-          return <div className="encabezadoTabla">Fecha</div>;
+          return <div className="encabezadoTabla">Fecha máxima de pago</div>;
         },
       },
     },
@@ -232,7 +290,6 @@ const [data,setData]=useState([]);
     },
   ];
 
- 
   /**
    * Funcion que se encarga del tipo de pago
    */
@@ -254,15 +311,16 @@ const [data,setData]=useState([]);
     guardarPago();
     navigate("/report_payment");
   }
-/**
- * Leemos la DB y obtenemos los pagos pendientes del usuario logueado
- * 
- */
+  /**
+   * Leemos la DB y obtenemos los pagos pendientes del usuario logueado
+   *
+   */
 
-const coleccion=query(collection(db,`/pagos/${userUid}/registros`),where("status","==","pendiente"));
+  /*
+const coleccionPagos=query(collection(db,`/pagos/${userUid}/registros`),where("status","==","pendiente"));
 
   const getPagos=async()=>{
-    const dataPagos=await getDocs(coleccion);
+    const dataPagos=await getDocs(coleccionPagos);
    
     const pagosData=dataPagos.docs.map((doc)=>({
       beneficiario: doc.data().beneficiario,
@@ -276,57 +334,153 @@ const coleccion=query(collection(db,`/pagos/${userUid}/registros`),where("status
 
   
   }
-    
- 
-useEffect(()=>{
- getPagos();
- const suma=data.reduce((total,pago)=>total+parseFloat(pago.monto),0);
+    */
+ /*
+const coleccionCobros=query(collection(db,`/pagos/${userUid}/registros`),where("status","==","pendiente"));
 
-setporPagar(suma);
+  const getCobros=async()=>{
+    const dataPagos=await getDocs(coleccionCobros);
+   
+    const cobrosData=dataCobros.docs.map((doc)=>({
+      deudor: doc.data().deudor,
+      monto: doc.data().monto,
+      date: doc.data().fechaCobro,
+      concepto: doc.data().concepto,
+    }));
+  
+   
+    setDataCobros(cobrosData);
 
+  
+  }
+    */
+  useEffect(() => {
+    //getPagos();
+    //getCobros();
+    const suma = data.reduce(
+      (total, pago) => total + parseFloat(pago.monto),
+      0
+    );
 
-},[data]);
+    setporPagar(suma);
+   
+    setData([
+      {
+        beneficiario: "Juan Perez",
+        date: "21/03/2024",
+        monto: "123.4",
+        concepto: "prueba",
+      },
+      {
+        beneficiario: "Juan Perez",
+        date: "21/03/2024",
+        monto: "123.4",
+        concepto: "prueba",
+      },
+      {
+        beneficiario: "Juan Perez",
+        date: "21/03/2024",
+        monto: "123.4",
+        concepto: "prueba",
+      },
+      {
+        beneficiario: "Juan Perez",
+        date: "21/03/2024",
+        monto: "123.4",
+        concepto: "prueba",
+      },
+      {
+        beneficiario: "Juan Perez",
+        date: "21/03/2024",
+        monto: "123.4",
+        concepto: "prueba",
+      },
+      {
+        beneficiario: "Juan Perez",
+        date: "21/03/2024",
+        monto: "123.4",
+        concepto: "prueba",
+      },
+      {
+        beneficiario: "Juan Perez",
+        date: "21/03/2024",
+        monto: "123.4",
+        concepto: "prueba",
+      },
+      {
+        beneficiario: "Juan Perez",
+        date: "21/03/2024",
+        monto: "123.4",
+        concepto: "prueba",
+      },
+      {
+        beneficiario: "Juan Perez",
+        date: "21/03/2024",
+        monto: "123.4",
+        concepto: "prueba",
+      },
+      {
+        beneficiario: "Juan Perez",
+        date: "21/03/2024",
+        monto: "123.4",
+        concepto: "prueba",
+      },
+      {
+        beneficiario: "Juan Perez",
+        date: "21/03/2024",
+        monto: "123.4",
+        concepto: "prueba",
+      },
+    ]);
+  setDataCobros(data)
+  const suma1 = dataCobros.reduce(
+    (total, pago) => total + parseFloat(pago.monto),
+    0
+  );
 
+  setporCobrar(suma1);
 
+  }, [data]);
 
   return (
     <>
-  {rol==="Admin"?
-      <Card variant="elevation" className="m-4 ">
-      <CardContent>
-          <div>
-            <div className="headerCardPayments bg-yellow-100 pl-5 pr-5">
-              <h1>
-                Cobros pendientes:
-                <span>
-                  <p className="text-green-600">${porCobrar}</p>{" "}
-                </span>
-              </h1>
-              <NavLink to="/hcobros">
-                <h2>Historico de cobros</h2>
-              </NavLink>
+
+      {rol === "" ? (
+        <Card variant="elevation" className="m-4 ">
+          <CardContent>
+            <div>
+              <div className="headerCardPayments bg-orange-200 pl-5 pr-5">
+                <h1>
+                  Cobros pendientes:
+                  <span>
+                    <p className="text-green-600">${porCobrar}</p>{" "}
+                  </span>
+                </h1>
+                <NavLink to="/hcobros">
+                  <h2>Historico de cobros</h2>
+                </NavLink>
+              </div>
+
+              <MUIDataTable
+                data={dataCobros}
+                columns={columnsCobros}
+                options={opciones("Cobros pendientes")}
+              />
             </div>
-
-            <MUIDataTable
-              data={data}
-              columns={columnsCobros}
-              options={options}
-            />
-          </div>
           </CardContent>
-      </Card>
-    :<></>}
+        </Card>
+      ) : (
+        <></>
+      )}
 
-{/**
+      {/**
 Tabla de pagos pendientes
  */}
 
-      <Card
-      variant="elevation" 
-      className="m-4 ">
-      <CardContent>
-      <div>
-            <div className="headerCardPayments bg-yellow-50 pl-5 pr-5">
+      <Card variant="elevation" className="m-4 ">
+        <CardContent>
+          <div>
+            <div className="headerCardPayments bg-indigo-100 pl-5 pr-5">
               <h1>
                 Pagos pendientes:{" "}
                 <span>
@@ -338,17 +492,15 @@ Tabla de pagos pendientes
               </NavLink>
             </div>
             <div>
-          
-            
               <MUIDataTable
                 data={data}
                 columns={columnsPagos}
-                options={options}
-              />
+                options={opciones("Pagos pendientes")}
                
+              />
             </div>
           </div>
-          </CardContent>
+        </CardContent>
       </Card>
 
       {/** Ventana modal */}
@@ -466,7 +618,11 @@ Tabla de pagos pendientes
             {/** Botones de la ventana modal*/}
             <Stack direction="row" spacing={2}>
               <Tooltip title="Guardar" placement="top">
-                <IconButton aria-label="save" color="primary" onClick={guardarPago}>
+                <IconButton
+                  aria-label="save"
+                  color="primary"
+                  onClick={guardarPago}
+                >
                   <Save />
                 </IconButton>
               </Tooltip>
@@ -481,8 +637,6 @@ Tabla de pagos pendientes
                 </IconButton>
               </Tooltip>
             </Stack>
-
-       
           </form>
         </div>
       </Modal>

@@ -12,6 +12,7 @@ import ReportCotizacion from '../pages/ReportCotizacion';
 import ResetPassword from "../pages/ResetPassword";
 import AddUser from "../pages/AddUser";
 import HistoricoPagos from "../pages/HistoricoPagos";
+import HistoricoCobros from "../pages/HistoricoCobros";
 const Rutes = () => {
   return (
     <Routes>
@@ -26,7 +27,8 @@ const Rutes = () => {
     <Route path="/report_quote" element={<ReportCotizacion/>}/>
     <Route path="/resetPassword" element={<ResetPassword/>}/>
     <Route path="/registerUser" element={<AddUser/>}/>
-    <Route path="/hPagos" element={<HistoricoPagos/>}/>
+    <Route path="/hpagos" element={<HistoricoPagos/>}/>
+    <Route path="/hcobros" element={<HistoricoCobros/>}/>
   </Routes>
   )
 }

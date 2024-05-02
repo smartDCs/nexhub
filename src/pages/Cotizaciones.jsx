@@ -13,7 +13,7 @@ import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
 import { IoIosSave } from "react-icons/io";
 import MUIDataTable from "mui-datatables";
 import dayjs from "dayjs";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function Cotizaciones() {
 
   let navigate=useNavigate();
@@ -21,14 +21,10 @@ function Cotizaciones() {
 
   /** constantes para la tabla */
   
-  const [responsive, setResponsive] = useState("simple");
-  const [tableBodyHeight, setTableBodyHeight] = useState("600px");
-  const [tableBodyMaxHeight, setTableBodyMaxHeight] = useState("100%");
-  const [searchBtn, setSearchBtn] = useState(false);
-  const [downloadBtn, setDownloadBtn] = useState(true);
-  const [printBtn, setPrintBtn] = useState(false);
-  const [viewColumnBtn, setViewColumnBtn] = useState(false);
-  const [filterBtn, setFilterBtn] = useState(false);
+  const responsive= "simple";
+  const tableBodyHeight = "600px";
+  const tableBodyMaxHeight="100%";
+ 
 
   /**
    * Variables para la tabla
@@ -214,16 +210,17 @@ function Cotizaciones() {
   ];
  
   const options = {
-    search: searchBtn,
-    download: downloadBtn,
-    print: printBtn,
-    viewColumns: viewColumnBtn,
-    filter: filterBtn,
+    search: true,
+    download: true,
+    print: false,
+    viewColumns: true,
+    filter: true,
     filterType: "dropdown",
     responsive,
-    //tableBodyHeight,
-    //tableBodyMaxHeight,
+    tableBodyHeight,
+    tableBodyMaxHeight,
     selectableRows: "multiple",
+
     textLabels: {
       body: {
         noMatch: "No se agrego ningún elemento",

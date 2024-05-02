@@ -19,7 +19,10 @@ function Login() {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+      //  console.log('usuario ',user.uid);
+   
         const docuRef = doc(db, `usuarios/${user.uid}`);
+        
         getDoc(docuRef)
           .then((docuData) => {
             
