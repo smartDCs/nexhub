@@ -2,7 +2,7 @@ import { Card, CardContent } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
-import { BsCashCoin } from "react-icons/bs";
+
 import Modal from "@mui/material/Modal";
 import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
@@ -60,8 +60,8 @@ const [dataCobros,setDataCobros]=useState([]);
         filter: true,
         sort: true,
 
-        customBodyRender: (value, tableMeta, updateValue) => {
-          const handleChange = (event) => {
+        customBodyRender: (value, tableMeta) => {
+          const handleChange = () => {
             const id = tableMeta.rowData[1];
             handleOpen(id, "Pagos", tableMeta.rowData[3]);
           };
@@ -151,8 +151,9 @@ const [dataCobros,setDataCobros]=useState([]);
         filter: true,
         sort: true,
 
-        customBodyRender: (value, tableMeta, updateValue) => {
-          const handleChange = (event) => {
+        customBodyRender: (value, tableMeta) => {
+          const handleChange = () => {
+            
             const id = tableMeta.rowData[1];
             handleOpen(id, "Pagos", tableMeta.rowData[3]);
           };
@@ -342,7 +343,7 @@ const coleccionCobros=query(collection(db,`/cobros/${userUid}/registros`),where(
               <MUIDataTable
                 data={dataCobros}
                 columns={columnsCobros}
-                options={opciones("Cobros pendientes")}
+                options={opciones("Cobros pendientes","200px","100%")}
               />
             </div>
           </CardContent>
@@ -373,7 +374,7 @@ Tabla de pagos pendientes
               <MUIDataTable
                 data={data}
                 columns={columnsPagos}
-                options={opciones("Pagos pendientes")}
+                options={opciones("Pagos pendientes","200px","100%")}
                
               />
             </div>

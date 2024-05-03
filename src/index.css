@@ -1,7 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 
+input[type=number] { -moz-appearance:textfield; }
 html,
 body {
   height: 100%;
@@ -157,11 +163,11 @@ body {
 }
 
 .formNeighbor {
-  background-color: rgba(230, 255, 18, 0.596);
+  background-color: rgba(203, 206, 179, 0.829);
   border: solid 1px;
   border-radius: 5px;
   border-color: beige;
-  padding: 10px;
+
   font-weight: bold;
 }
 
@@ -194,7 +200,8 @@ body {
   color: rgb(13, 136, 33);
 }
 .mainCard {
-  height: 595px;
+  height:auto;
+  
 }
 .btnPagar {
   width: 80px;
@@ -275,9 +282,10 @@ body {
  background-color: #5fb36d !important;
  color: white !important;
  border: 1px solid rgba(250,250,250,0.4);
-height: 20px !important;
-margin: 0 !important;
-padding: 0 !important;
+/*height: 20px !important;*/
+margin: 0px !important;
+padding: 0 0 0 0 !important;
+
 }
 .encabezadoTabla{
   margin: 0;
@@ -285,4 +293,16 @@ padding: 0 !important;
   font-size: 8pt;
   text-align: justify;
   
+}
+.barChart{
+  border-radius: 5px;
+  background-color: rgba(245,245,255,0.9);
+  border: 1px solid ;
+ 
+}
+.agenda{
+  display: flex;
+  justify-content: flex-start;
+  font-size: 9pt;
+  height: 150px !important;
 }

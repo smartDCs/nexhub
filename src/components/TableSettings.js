@@ -1,7 +1,7 @@
-export function opciones(fileName) {
+export function opciones(fileName,height,maxheight) {
   const responsive = "simple";
-  const tableBodyHeight = "200px";
-  const tableBodyMaxHeight = "100%";
+  const tableBodyHeight = height;
+  const tableBodyMaxHeight = maxheight;
   const options = {
     search: true,
     download: true,

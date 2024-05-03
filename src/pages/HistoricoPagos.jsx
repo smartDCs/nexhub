@@ -176,7 +176,7 @@ function HistoricoPagos() {
             title={"Historial de pagos"}
             data={data}
             columns={columnsPagos}
-            options={opciones("Historico de pagos")}
+            options={opciones("Historico de pagos","200px","100%")}
           />
         </CardContent>
       </Card>
