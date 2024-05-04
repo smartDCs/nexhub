@@ -15,7 +15,7 @@ import { Groups3Outlined } from "@mui/icons-material";
 import logo from "../assets/nexhub1.png";
 import { useContext } from "react";
 import { UserContext } from "../context/User/UserContext";
-
+import PaymentsIcon from '@mui/icons-material/Payments';
 function Sidebar() {
   const { userData } = useContext(UserContext);
 
@@ -36,8 +36,17 @@ function Sidebar() {
             className="p-4 hover:bg-lime-400 rounded-md "
             //  hidden={userData.rol==="SuperAdmin"?false:true}
           >
-            <NavLink to={userData.user ? "/payments" : "/payments"}>
+            <NavLink to={userData.user ? "/credito" : "/"}>
               <RequestQuoteIcon className="mr-4" />
+              CRÉDITO A COPROPIETARIOS
+            </NavLink>
+          </li>
+          <li
+            className="p-4 hover:bg-lime-400 rounded-md "
+            //  hidden={userData.rol==="SuperAdmin"?false:true}
+          >
+            <NavLink to={userData.user ? "/payments" : "/payments"}>
+              <PaymentsIcon className="mr-4" />
               COBROS/PAGOS
             </NavLink>
           </li>
