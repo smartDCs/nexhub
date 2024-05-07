@@ -14,6 +14,7 @@ import AddUser from "../pages/AddUser";
 import HistoricoPagos from "../pages/HistoricoPagos";
 import HistoricoCobros from "../pages/HistoricoCobros";
 import Credito from "../pages/Credito";
+import ReportAmortizacion from "../Reports/ReportAmortizacion";
 const Rutes = () => {
   return (
     <Routes>
@@ -26,6 +27,7 @@ const Rutes = () => {
     <Route path="/settings" element={<BuildSettings/>} />
     <Route path="/report_payment" element={<Report/>}/>
     <Route path="/report_quote" element={<ReportCotizacion/>}/>
+    <Route path="/report_amortizacion" element={<ReportAmortizacion/>}/>
     <Route path="/credito" element={<Credito/>}/>
     <Route path="/resetPassword" element={<ResetPassword/>}/>
     <Route path="/registerUser" element={<AddUser/>}/>
