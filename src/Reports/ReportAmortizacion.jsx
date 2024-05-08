@@ -42,15 +42,20 @@ function ReportAmortizacion() {
               <View style={styles.datosPagare}>
                 <Text>
                   Yo, <Text style={styles.negrilla}>{datosUsuario.nombre}</Text>
-                  , con domicilio en{" "}
+                  , con domicilio en
                   <Text style={styles.negrilla}>{datosUsuario.addr}</Text>,
-                  identificado con CI.{" "}
+                  identificado con CI.
                   <Text style={styles.negrilla}>{datosUsuario.ci}</Text>, en
                   adelante "El Deudor", reconozco deber y me obligo a pagar
-                  incondicionalmente a <Text style={styles.negrilla}>{datosBeneficiario.nombre}</Text>, con domicilio
-                  en <Text style={styles.negrilla}>{datosBeneficiario.addr}</Text>, identificado con CI.
-                  <Text style={styles.negrilla}>{datosBeneficiario.ci}</Text>, en adelante "El Acreedor", o a su orden,
-                  la cantidad de $
+                  incondicionalmente a
+                  <Text style={styles.negrilla}>
+                    {datosBeneficiario.nombre}
+                  </Text>
+                  , con domicilio en
+                  <Text style={styles.negrilla}>{datosBeneficiario.addr}</Text>,
+                  identificado con CI.
+                  <Text style={styles.negrilla}>{datosBeneficiario.ci}</Text>,
+                  en adelante "El Acreedor", o a su orden, la cantidad de $
                   <Text style={styles.negrilla}>{datosCredito.monto}</Text>
                   <Text style={{ textTransform: "uppercase" }}>
                     {" "}
@@ -174,11 +179,19 @@ function ReportAmortizacion() {
             </Text>
             <Text></Text>
             <View style={styles.signatureArea}>
-              <Text style={styles.firma}>{datosBeneficiario.nombre}{'\n'}CI.:{datosBeneficiario.ci}{'\n'}Teléfono:{datosBeneficiario.telefono}</Text>
+              <Text style={styles.firma}>
+                {datosBeneficiario.nombre}
+                {"\n"}CI.:{datosBeneficiario.ci}
+                {"\n"}Teléfono:{datosBeneficiario.telefono}
+              </Text>
               <Text></Text>
-              <Text style={styles.firma}>{datosUsuario.nombre}{'\n'}CI.:
-              {datosUsuario.ci}{'\n'}Teléfono:
-              {datosUsuario.telefono}</Text>
+              <Text style={styles.firma}>
+                {datosUsuario.nombre}
+                {"\n"}CI.:
+                {datosUsuario.ci}
+                {"\n"}Teléfono:
+                {datosUsuario.telefono}
+              </Text>
             </View>
           </View>
           {/**

@@ -15,6 +15,7 @@ import HistoricoPagos from "../pages/HistoricoPagos";
 import HistoricoCobros from "../pages/HistoricoCobros";
 import Credito from "../pages/Credito";
 import ReportAmortizacion from "../Reports/ReportAmortizacion";
+import PlanillasAgua from "../pages/PlanillasAgua";
 const Rutes = () => {
   return (
     <Routes>
@@ -32,6 +33,7 @@ const Rutes = () => {
     <Route path="/resetPassword" element={<ResetPassword/>}/>
     <Route path="/registerUser" element={<AddUser/>}/>
     <Route path="/hpagos" element={<HistoricoPagos/>}/>
+    <Route path="/planillasagua" element={<PlanillasAgua/>}/>
     <Route path="/hcobros" element={<HistoricoCobros/>}/>
   </Routes>
   )

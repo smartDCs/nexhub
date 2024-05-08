@@ -39,7 +39,7 @@ alignItems:'center',
   },
   signatureArea: {
     flexDirection: "row",
-    paddingTop: 100,
+    paddingTop: 60,
     fontSize: 12,
 
     gap:30

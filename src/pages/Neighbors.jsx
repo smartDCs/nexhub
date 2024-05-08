@@ -25,7 +25,7 @@ function Neighbors() {
   const [telefono, setTelefono] = useState();
   const [oficina, setOficina] = useState("");
   const [alicuota, setAlicuota] = useState();
-  const [medidorAgua, setMedidorAgua] = useState();
+ 
   const [cedula, setCedula] = useState();
   const [open, setOpen] = useState(false);
   const handleOpen = (rowData) => {
@@ -35,7 +35,7 @@ function Neighbors() {
     setTelefono(rowData[3]);
     setOficina(rowData[4]);
     setAlicuota(rowData[6]);
-    setMedidorAgua(rowData[5]);
+
     
     setOpen(true);
   };
@@ -135,24 +135,7 @@ function Neighbors() {
         },
       },
     },
-    {
-      name: "medidorAgua",
-
-      options: {
-        filter: true,
-        sort: false,
-        setCellProps: () => ({
-          style: { margin: 0, padding: "0 10px", fontSize: 11 },
-        }),
-        customHeadLabelRender: () => {
-          return (
-            <div style={{ width: "110px" }} className="encabezadoTabla m-2">
-              # MEDIDOR DE AGUA
-            </div>
-          );
-        },
-      },
-    },
+   
     {
       name: "alicuota",
 
@@ -226,7 +209,7 @@ function Neighbors() {
       email: "ejemplo@ejemplo.com",
       ci: "1234567890",
       telefono: "0987654321",
-      medidorAgua: "123456",
+    
       propiedad: "Departamento 101",
       alicuota: "12.03",
     },
@@ -235,7 +218,7 @@ function Neighbors() {
       email: "ejemplo@ejemplo.com",
       ci: "1234567890",
       telefono: "0987654321",
-      medidorAgua: "123456",
+    
       propiedad: "Departamento 101",
       alicuota: "12.03",
     },
@@ -244,7 +227,7 @@ function Neighbors() {
       email: "ejemplo@ejemplo.com",
       ci: "1234567890",
       telefono: "0987654321",
-      medidorAgua: "123456",
+     
       propiedad: "Departamento 101",
       alicuota: "12.03",
     },
@@ -253,7 +236,7 @@ function Neighbors() {
       email: "ejemplo@ejemplo.com",
       ci: "1234567890",
       telefono: "0987654321",
-      medidorAgua: "123456",
+     
       propiedad: "Departamento 101",
       alicuota: "12.03",
     },
@@ -262,7 +245,7 @@ function Neighbors() {
       email: "ejemplo@ejemplo.com",
       ci: "1234567890",
       telefono: "0987654321",
-      medidorAgua: "123456",
+    
       propiedad: "Departamento 101",
       alicuota: "12.03",
     },
@@ -271,7 +254,7 @@ function Neighbors() {
       email: "ejemplo@ejemplo.com",
       ci: "1234567890",
       telefono: "0987654321",
-      medidorAgua: "123456",
+    
       propiedad: "Departamento 101",
       alicuota: "12.03",
     },
@@ -280,7 +263,7 @@ function Neighbors() {
       email: "ejemplo@ejemplo.com",
       ci: "1234567890",
       telefono: "0987654321",
-      medidorAgua: "123456",
+   
       propiedad: "Departamento 101",
       alicuota: "12.03",
     },
@@ -289,7 +272,7 @@ function Neighbors() {
       email: "ejemplo@ejemplo.com",
       ci: "1234567890",
       telefono: "0987654321",
-      medidorAgua: "123456",
+    
       propiedad: "Departamento 101",
       alicuota: "12.03",
     },
@@ -298,7 +281,7 @@ function Neighbors() {
       email: "ejemplo@ejemplo.com",
       ci: "1234567890",
       telefono: "0987654321",
-      medidorAgua: "123456",
+    
       propiedad: "Departamento 101",
       alicuota: "12.03",
     },
@@ -307,7 +290,7 @@ function Neighbors() {
       email: "ejemplo@ejemplo.com",
       ci: "1234567890",
       telefono: "0987654321",
-      medidorAgua: "123456",
+     
       propiedad: "Departamento 101",
       alicuota: "12.03",
     },
@@ -316,7 +299,7 @@ function Neighbors() {
       email: "ejemplo@ejemplo.com",
       ci: "1234567890",
       telefono: "0987654321",
-      medidorAgua: "123456",
+    
       propiedad: "Departamento 101",
       alicuota: "12.03",
     },
@@ -333,8 +316,7 @@ function Neighbors() {
       !telefono ||
       !cedula ||
       !oficina ||
-      !alicuota ||
-      !medidorAgua
+      !alicuota 
     ) {
       alert("Por favor ingrese todos los datos requeridos");
     } else {
@@ -349,7 +331,7 @@ function Neighbors() {
     setTelefono("");
     setOficina("");
     setAlicuota("");
-    setMedidorAgua("");
+   
   }
 
   /**
@@ -448,26 +430,7 @@ handleClose();
                   value={alicuota}
                   onChange={(e) => setAlicuota(e.target.value)}
                 />
-                <TextField
-                  variant="standard"
-                  type="number"
-                  required
-                  InputProps={{
-                    inputProps: {
-                      min: 0,
-                    },
-                  }}
-                  label={
-                    <label>
-                      {" "}
-                      <SpeedIcon className="text-blue-400" /># Medidor de agua
-                    </label>
-                  }
-                  className="grid col-span-3"
-                  value={medidorAgua}
-                  onChange={(e) => setMedidorAgua(e.target.value)}
-                />
-
+               
                 <TextField
                   variant="standard"
                   type="number"
@@ -616,25 +579,7 @@ handleClose();
                 value={alicuota}
                 onChange={(e) => setAlicuota(e.target.value)}
               />
-              <TextField
-                variant="standard"
-                type="number"
-                required
-                InputProps={{
-                  inputProps: {
-                    min: 0,
-                  },
-                }}
-                label={
-                  <label>
-                    {" "}
-                    <SpeedIcon className="text-blue-400" /># Medidor de agua
-                  </label>
-                }
-                className="grid col-span-3"
-                value={medidorAgua}
-                onChange={(e) => setMedidorAgua(e.target.value)}
-              />
+              
 
               <TextField
                 variant="standard"

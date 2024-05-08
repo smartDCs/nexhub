@@ -1,5 +1,6 @@
-import React, { useState  } from "react";
+import { useState  } from "react";
 import  {AmortizacionContext}  from "./AmortizacionContext";
+
 
 const  AmortizacionData=({children})=>{
  

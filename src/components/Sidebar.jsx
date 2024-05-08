@@ -11,11 +11,12 @@ import EngineeringIcon from "@mui/icons-material/Engineering";
 
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { FaBuildingUser } from "react-icons/fa6";
-import { Groups3Outlined } from "@mui/icons-material";
+
 import logo from "../assets/nexhub1.png";
 import { useContext } from "react";
 import { UserContext } from "../context/User/UserContext";
 import PaymentsIcon from '@mui/icons-material/Payments';
+import SpeedIcon from '@mui/icons-material/Speed';
 function Sidebar() {
   const { userData } = useContext(UserContext);
 
@@ -63,9 +64,9 @@ function Sidebar() {
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">
-            <NavLink to={userData.user ? "/inventario" : "/"}>
-              <Groups3Outlined className="mr-4" />
-              NÓMINA
+            <NavLink to={userData.user ? "/planillasagua" : "/"}>
+              <SpeedIcon className="mr-4" />
+              CONSUMO DE AGUA
             </NavLink>
           </li>
           <li className="p-4 hover:bg-lime-400 rounded-md">

@@ -133,7 +133,7 @@ function Dashboard() {
       <div className="grid grid-cols-4 gap-4 m-9 barChart ">
         <Card className="grid col-span-4 m-3" variant="outlined">
           <CardContent>
-            <Bar data={data} options={options} />;
+            <Bar data={data} options={options} />
           </CardContent>
         </Card>
       </div>
