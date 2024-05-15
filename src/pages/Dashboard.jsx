@@ -1,6 +1,6 @@
 import { Card, CardContent, TextField } from "@mui/material";
 
-import { useState } from "react";
+import { useState, useContext,useEffect } from "react";
 
 import "dayjs/locale/es-mx";
 
@@ -16,7 +16,8 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css"; // Importa los estilos CSS
 
 import moment from "moment/min/moment-with-locales";
-
+import { collection, getDocs, query, addDoc, where } from "firebase/firestore";
+import { UserContext } from "../context/User/UserContext";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -36,7 +37,7 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+export const optionsAgua = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
@@ -68,7 +69,7 @@ export const options = {
   },
 };
 
-export const options1 = {
+export const optionsEnergia = {
   responsive: true,
   maintainAspectRatio: false,
   cutout: "60%",
@@ -131,60 +132,113 @@ export const data1 = {
   labels,
   datasets: [
     {
-      label: "Kw/h",
-      data: [80, 85, 120, 92, 84, 90, 107, 94, 123, 97, 87, 93],
-      backgroundColor: ["rgba(75, 192, 192, 0.8)"],
+      label: "m³",
+      data: [100, 150, 120, 12, 34, 90, 67, 94, 123, 97, 87, 43],
+      backgroundColor: "rgba(25, 99, 255, 0.5)",
     },
   ],
 };
 
 function Dashboard() {
-  moment.locale("es");
+const { userData, db } = useContext(UserContext);
+  const user = userData.user;
 
+
+  const [eventos, setEventos] = useState([]);
   const [fechaReunion, setFechaReunion] = useState();
+const [motivo,setMotivo]=useState();
+const [grafica,setGrafica]=useState({ labels,
+  datasets:[
+    {
+    label:'',
+    data:[],
+    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+   
+    }
+  ]});
+
+ const coleccion = query(
+    collection(db, '/recordatorios')
+  );
+
+  const getRecordatorios=async ()=>{
+    const dataAgenda=await getDocs(coleccion);
+    const datosAgenda=dataAgenda.docs.map((doc)=>({
+      title:(doc.data().evento) +"; Responsable:" +(doc.data().responsable),
+      start:new Date(doc.data().fechaInicio),
+      end:new Date(doc.data().fechaFin),
+      reservado:doc.data().reservado,
+      responsable:doc.data().responsable
+    }));
+setEventos(datosAgenda);
+    
+  }
+
+
+  /**
+   * obtener los datos de consumo energético
+   */
+  const coleccionEnergia = query(
+    collection(db, '/energia'),where("anio","==","2024")
+  );
+  const getEnergia=async ()=>{
+    const dataEnergia=await getDocs(coleccionEnergia);
+    const datosEnergia=dataEnergia.docs.map((doc)=>({
+   anio:doc.data().anio,
+   consumo:doc.data().consumo,
+   mes:doc.data().mes
+    }));
+const dataSets=datosEnergia.map((dato)=>dato.consumo);
+const labels=datosEnergia.map((dato)=>dato.mes);
+
+    setGrafica({
+      labels,
+      datasets:[
+        {
+        label:'Consumo de energía',
+        data:dataSets,
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+        }
+      ]
+    })
+
+
+  }
+
+
+  useEffect(() => {
+  moment.locale("es");
+  getRecordatorios();
+  getEnergia();
+  },[]);
+
+/**
+ * guardar los eventos de la agenda en la base de datos
+ */
+function limpiarConvocatoria(){
+  setFechaReunion(dayjs().format("YYYY-MM-DDTHH:mm"));
+  setMotivo('');
+
+} 
 
   function enviarMensaje() {
+
     event.preventDefault();
-    alert("Se envió la comunicación para el día " + "\n" + fechaReunion);
+  const eventosRef=collection(db,'recordatorios');
+  addDoc(eventosRef,{
+    evento:motivo,
+    fechaInicio:fechaReunion,
+    fechaFin:dayjs(fechaReunion).add(2,'hour').format("YYYY-MM-DDTHH:mm"),
+    responsable:user,
+    reservado:false
+  });
+
+  limpiarConvocatoria();
   }
 
   const localizer = momentLocalizer(moment); // Configura el localizador
-
-  const eventos = [
-    {
-      title: "Reunión importante",
-      start: new Date("2024-05-15T10:00"),
-      end: new Date("2024-05-15T12:00"),
-    },
-    {
-      title: "Reunión 2",
-      start: new Date("2024-05-18T18:00"),
-      end: new Date("2024-05-18T20:00"),
-    },
-    {
-      title: "Reunión 3",
-      start: new Date("2024-06-01T18:00"),
-      end: new Date("2024-06-01T20:00"),
-    },
-    {
-      title: "Reunión 4",
-      start: new Date("2024-06-18T18:00"),
-      end: new Date("2024-06-18T20:00"),
-    },
-    {
-      allday: true,
-      start: new Date("2024-05-26T00:00"),
-      end: new Date("2024-05-27T23:59"),
-      title: "Vacaciones",
-    },
-    {
-      reservado: true,
-      start: new Date("2024-05-16T00:00"),
-      end: new Date("2024-05-17T23:59"),
-      title: "Cerrado por mantenimiento",
-    },
-    // Agrega más eventos aquí...
-  ];
 
   return (
     <div>
@@ -229,12 +283,12 @@ function Dashboard() {
       <div className="grid grid-cols-4 gap-4 m-9 barChart ">
         <Card className="col-span-2">
           <CardContent>
-            <Bar data={data} options={options} style={{ height: "30vh" }} />
+            <Bar data={data} options={optionsAgua} style={{ height: "30vh" }} />
           </CardContent>
         </Card>
         <Card className="col-span-2">
           <CardContent>
-            <Bar data={data1} options={options1} style={{ height: "30vh" }} />
+            <Bar data={grafica} options={optionsEnergia} style={{ height: "30vh" }} />
           </CardContent>
         </Card>
       </div>
@@ -256,8 +310,8 @@ function Dashboard() {
               noEventsInRange: "No existen eventos programados",
             }}
             eventPropGetter={(event) => {
-              const backgroundColor = event.reservado ? "rgba(200,0,10,0.3)" : "blue";
-              return { style: { backgroundColor } };
+              const backgroundColor = event.reservado ? "rgba(200,0,10,0.3)" : "rgba(100,220,100,0.3)";
+              return { style: { backgroundColor, color:"black" } };
             }}
           />
         </div>
@@ -271,7 +325,7 @@ function Dashboard() {
               <TextField
                 label="Fecha y hora de la reunión *"
                 type="datetime-local"
-                defaultValue={dayjs().format("YYYY-MM-DDThh:mm")}
+                defaultValue={dayjs().format("YYYY-MM-DDTHH:mm")}
                 color="success"
                 InputLabelProps={{
                   shrink: true,
@@ -286,6 +340,8 @@ function Dashboard() {
               <textarea
                 placeholder="Describa el motivo de la reunion "
                 className="p-2"
+                value={motivo}
+                onChange={(e)=>setMotivo(e.target.value)}
               ></textarea>
               <button onClick={() => enviarMensaje()}>Enviar</button>
             </form>
