@@ -1,6 +1,6 @@
 import { Card, CardContent, TextField } from "@mui/material";
 
-import { useState, useContext,useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import "dayjs/locale/es-mx";
 
@@ -16,7 +16,15 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css"; // Importa los estilos CSS
 
 import moment from "moment/min/moment-with-locales";
-import { collection, getDocs, query, addDoc, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  addDoc,
+  where,
+  orderBy,
+  limit
+} from "firebase/firestore";
 import { UserContext } from "../context/User/UserContext";
 import {
   Chart as ChartJS,
@@ -103,139 +111,137 @@ export const optionsEnergia = {
   },
 };
 
-const labels = [
-  "Ene.",
-  "Feb.",
-  "Mar.",
-  "Abr.",
-  "May.",
-  "Jun.",
-  "Jul.",
-  "Ago.",
-  "Sep.",
-  "Oct.",
-  "Nov.",
-  "Dic.",
-];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "m³",
-      data: [100, 150, 120, 12, 34, 90, 67, 94, 123, 97, 87, 43],
-      backgroundColor: "rgba(25, 99, 255, 0.5)",
-    },
-  ],
-};
-export const data1 = {
-  labels,
-  datasets: [
-    {
-      label: "m³",
-      data: [100, 150, 120, 12, 34, 90, 67, 94, 123, 97, 87, 43],
-      backgroundColor: "rgba(25, 99, 255, 0.5)",
-    },
-  ],
-};
-
 function Dashboard() {
-const { userData, db } = useContext(UserContext);
+  const { userData, db } = useContext(UserContext);
   const user = userData.user;
-
 
   const [eventos, setEventos] = useState([]);
   const [fechaReunion, setFechaReunion] = useState();
-const [motivo,setMotivo]=useState();
-const [grafica,setGrafica]=useState({ labels,
-  datasets:[
-    {
-    label:'',
-    data:[],
-    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-   
-    }
-  ]});
+  const [motivo, setMotivo] = useState();
+  const [graficaEnergia, setGraficaEnergia] = useState({
+    datasets: [
+      {
+        label: "",
+        data: [],
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+      },
+    ],
+  });
+  const [graficaAgua, setGraficaAgua] = useState({
+    datasets: [
+      {
+        label: "",
+        data: [],
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+      },
+    ],
+  });
+  const coleccion = query(collection(db, "/recordatorios"));
 
- const coleccion = query(
-    collection(db, '/recordatorios')
-  );
-
-  const getRecordatorios=async ()=>{
-    const dataAgenda=await getDocs(coleccion);
-    const datosAgenda=dataAgenda.docs.map((doc)=>({
-      title:(doc.data().evento) +"; Responsable:" +(doc.data().responsable),
-      start:new Date(doc.data().fechaInicio),
-      end:new Date(doc.data().fechaFin),
-      reservado:doc.data().reservado,
-      responsable:doc.data().responsable
+  const getRecordatorios = async () => {
+    const dataAgenda = await getDocs(coleccion);
+    const datosAgenda = dataAgenda.docs.map((doc) => ({
+      title: doc.data().evento + "; Responsable:" + doc.data().responsable,
+      start: new Date(doc.data().fechaInicio),
+      end: new Date(doc.data().fechaFin),
+      reservado: doc.data().reservado,
+      responsable: doc.data().responsable,
     }));
-setEventos(datosAgenda);
-    
-  }
-
+    setEventos(datosAgenda);
+  };
 
   /**
    * obtener los datos de consumo energético
    */
+  
+
   const coleccionEnergia = query(
-    collection(db, '/energia'),where("anio","==","2024")
+    collection(db, "energia"),
+    where("anio", "==", "2024"),
+    orderBy("mes","asc")
   );
-  const getEnergia=async ()=>{
-    const dataEnergia=await getDocs(coleccionEnergia);
-    const datosEnergia=dataEnergia.docs.map((doc)=>({
-   anio:doc.data().anio,
-   consumo:doc.data().consumo,
-   mes:doc.data().mes
+  const getEnergia = async () => {
+    const dataEnergia = await getDocs(coleccionEnergia);
+    const datosEnergia = dataEnergia.docs.map((doc) => ({
+      anio: doc.data().anio,
+      consumo: doc.data().consumo,
+      mes: doc.data().mes,
     }));
-const dataSets=datosEnergia.map((dato)=>dato.consumo);
-const labels=datosEnergia.map((dato)=>dato.mes);
+    const dataSets = datosEnergia.map((dato) => dato.consumo);
+    const labels = datosEnergia.map((dato) => dato.mes);
 
-    setGrafica({
+    setGraficaEnergia({
       labels,
-      datasets:[
+      datasets: [
         {
-        label:'Consumo de energía',
-        data:dataSets,
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
-        }
-      ]
-    })
+          label: "Consumo de energía",
+          data: dataSets,
+          backgroundColor: "rgba(250, 102, 2, 0.5)",
+          borderColor: "rgba(250, 102, 2, 1)",
+          borderWidth: 1,
+        },
+      ],
+    });
+  };
+  /**
+   * obtener los datos de consumo de agua
+   */
+  const coleccionAgua = query(
+    collection(db, "/agua"),
+    where("anio", "==", "2024"),
+    orderBy("mes","asc")
+  );
+  const getAgua = async () => {
+    const dataAgua = await getDocs(coleccionAgua);
+    const datosAgua = dataAgua.docs.map((doc) => ({
+      anio: doc.data().anio,
+      consumoTotal: doc.data().consumoTotal,
+      mes: doc.data().mes,
+    }));
+    const dataSets = datosAgua.map((dato) => dato.consumoTotal);
+    const labels = datosAgua.map((dato) => dato.mes);
 
-
-  }
-
+    setGraficaAgua({
+      labels,
+      datasets: [
+        {
+          label: "Consumo de agua ",
+          data: dataSets,
+          backgroundColor: "rgba(75, 192, 204, 0.5)",
+          borderColor: "rgba(75, 192, 192, 1)",
+          borderWidth: 1,
+        },
+      ],
+    });
+  };
 
   useEffect(() => {
-  moment.locale("es");
-  getRecordatorios();
-  getEnergia();
-  },[]);
+    moment.locale("es");
+    getRecordatorios();
+    getEnergia();
+    getAgua();
+  }, []);
 
-/**
- * guardar los eventos de la agenda en la base de datos
- */
-function limpiarConvocatoria(){
-  setFechaReunion(dayjs().format("YYYY-MM-DDTHH:mm"));
-  setMotivo('');
-
-} 
+  /**
+   * guardar los eventos de la agenda en la base de datos
+   */
+  function limpiarConvocatoria() {
+    setFechaReunion(dayjs().format("YYYY-MM-DDTHH:mm"));
+    setMotivo("");
+  }
 
   function enviarMensaje() {
-
     event.preventDefault();
-  const eventosRef=collection(db,'recordatorios');
-  addDoc(eventosRef,{
-    evento:motivo,
-    fechaInicio:fechaReunion,
-    fechaFin:dayjs(fechaReunion).add(2,'hour').format("YYYY-MM-DDTHH:mm"),
-    responsable:user,
-    reservado:false
-  });
+    const eventosRef = collection(db, "recordatorios");
+    addDoc(eventosRef, {
+      evento: motivo,
+      fechaInicio: fechaReunion,
+      fechaFin: dayjs(fechaReunion).add(2, "hour").format("YYYY-MM-DDTHH:mm"),
+      responsable: user,
+      reservado: false,
+    });
 
-  limpiarConvocatoria();
+    limpiarConvocatoria();
   }
 
   const localizer = momentLocalizer(moment); // Configura el localizador
@@ -283,12 +289,20 @@ function limpiarConvocatoria(){
       <div className="grid grid-cols-4 gap-4 m-9 barChart ">
         <Card className="col-span-2">
           <CardContent>
-            <Bar data={data} options={optionsAgua} style={{ height: "30vh" }} />
+            <Bar
+              data={graficaAgua}
+              options={optionsAgua}
+              style={{ height: "30vh" }}
+            />
           </CardContent>
         </Card>
         <Card className="col-span-2">
           <CardContent>
-            <Bar data={grafica} options={optionsEnergia} style={{ height: "30vh" }} />
+            <Bar
+              data={graficaEnergia}
+              options={optionsEnergia}
+              style={{ height: "30vh" }}
+            />
           </CardContent>
         </Card>
       </div>
@@ -310,8 +324,10 @@ function limpiarConvocatoria(){
               noEventsInRange: "No existen eventos programados",
             }}
             eventPropGetter={(event) => {
-              const backgroundColor = event.reservado ? "rgba(200,0,10,0.3)" : "rgba(100,220,100,0.3)";
-              return { style: { backgroundColor, color:"black" } };
+              const backgroundColor = event.reservado
+                ? "rgba(200,0,10,0.3)"
+                : "rgba(100,220,100,0.3)";
+              return { style: { backgroundColor, color: "black" } };
             }}
           />
         </div>
@@ -341,14 +357,13 @@ function limpiarConvocatoria(){
                 placeholder="Describa el motivo de la reunion "
                 className="p-2"
                 value={motivo}
-                onChange={(e)=>setMotivo(e.target.value)}
+                onChange={(e) => setMotivo(e.target.value)}
               ></textarea>
               <button onClick={() => enviarMensaje()}>Enviar</button>
             </form>
           </CardContent>
         </Card>
       </div>
-     
     </div>
   );
 }

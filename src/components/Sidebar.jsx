@@ -8,7 +8,7 @@ import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 
 import EngineeringIcon from "@mui/icons-material/Engineering";
-
+import SettingsIcon from '@mui/icons-material/Settings';
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { FaBuildingUser } from "react-icons/fa6";
 
@@ -94,8 +94,8 @@ function Sidebar() {
             hidden={userData.rol === "SuperAdmin" ? false : true}
           >
             <NavLink to={userData.user ? "/settings" : "/"}>
-              <GroupAddIcon className="mr-4" />
-              AGREGAR USUARIO
+              <SettingsIcon className="mr-4" />
+              CONFIGURACIÓN
             </NavLink>
           </li>
         </ul>
