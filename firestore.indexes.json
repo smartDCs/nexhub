@@ -1,0 +1,47 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "agua",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "anio",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "mes",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "energia",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "anio",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "consumo",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "energia",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "anio",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "mes",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

@@ -171,20 +171,8 @@ body {
   font-weight: bold;
 }
 
-.formAdministrativa h1 {
-  font-size: small;
-  font-weight: bolder;
-  text-align: center;
-}
-.formAdministrativa {
-  padding: 20px;
-  background-color: rgba(23, 186, 236, 0.493);
-  border-radius: 5px;
-  border-color: lightgrey;
-}
-.TextField {
-  background-color: rgb(247, 248, 248);
-}
+
+
 .headerCardPayments {
   display: flex;
   justify-content: space-between;
@@ -326,4 +314,37 @@ align-content: center;
   left: 0;
  color: rgb(255, 255, 255);
 
+}
+.modalComunales{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: auto;
+  max-height: 70%;
+ padding: 0.5rem;
+ padding-bottom: 1rem;
+  background-color: white;
+  overflow: auto;
+ border-radius: 0.5rem;
+}
+.lista ul{
+  height: 2.6rem;
+  overflow: auto;
+  
+}
+.lista li{
+ border-bottom: 1px solid;
+ border-color: rgba(200,200,200,0.3);
+ padding: 0.1em;
+}
+.lista{
+  border: 1px solid;
+  border-color: rgb(220,220,220);
+  width: 100%;
+  font-size: 0.7em;
+}
+.lista Button{
+  font-size: 0.8em;
 }
